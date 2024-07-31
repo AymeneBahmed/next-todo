@@ -15,14 +15,13 @@ import { useState } from "react";
 const links = ["Home", "Pricing", "Features", "About", "Contact"];
 
 export default function Navbar() {
-   const [menuOpen, setMenuOpen] = useState(false);
 
- function toggleMenu (){
-  setMenuOpen(!menuOpen);
- }
+
+
   return (
     <NavigationMenu className="p-4 max-w-[80%] left-1/2 -translate-x-1/2 gap-10 justify-around">
       <NavigationMenuList>
+        <HamburgerMenu></HamburgerMenu>
         <Link href={"/"} passHref legacyBehavior>
           <NavigationMenuLink className="uppercase text-xl font-bold flex items-center gap-2">
             <PenBox />
@@ -60,20 +59,26 @@ export default function Navbar() {
   );
 }
 
-/*function HamburgerMenu() {
- const [menuOpen, setMenuOpen] = useState(false);
+function HamburgerMenu() {
 
- function toggleMenu (){
-  setMenuOpen(!menuOpen);
- }
+ 
  return(
-  <>
-  <button
-  className="lg:hidden"
-  onClick={() => setMenuOpen(!menuOpen)}
-  ></button>
-  </>
+ 
+<div className="Hamburger-container">
+<a href="">Home</a>
+<a href="">Pricing</a>
+<a href="">Pricing</a>
+<a href="">Pricing</a>
+<a href="">Pricing</a>
+<button>X</button>
 
+</div>
+ 
  ) 
+}
+/*const [menuOpen, setMenuOpen] = useState(false);
+
+function toggleMenu (){
+ setMenuOpen((menuOpen)=> !menuOpen);
 }
  */
