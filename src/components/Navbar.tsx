@@ -8,10 +8,18 @@ import {
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { PenBox } from "lucide-react";
+import { useState } from "react";
+
+
 
 const links = ["Home", "Pricing", "Features", "About", "Contact"];
 
 export default function Navbar() {
+   const [menuOpen, setMenuOpen] = useState(false);
+
+ function toggleMenu (){
+  setMenuOpen(!menuOpen);
+ }
   return (
     <NavigationMenu className="p-4 max-w-[80%] left-1/2 -translate-x-1/2 gap-10 justify-around">
       <NavigationMenuList>
@@ -51,3 +59,21 @@ export default function Navbar() {
     </NavigationMenu>
   );
 }
+
+/*function HamburgerMenu() {
+ const [menuOpen, setMenuOpen] = useState(false);
+
+ function toggleMenu (){
+  setMenuOpen(!menuOpen);
+ }
+ return(
+  <>
+  <button
+  className="lg:hidden"
+  onClick={() => setMenuOpen(!menuOpen)}
+  ></button>
+  </>
+
+ ) 
+}
+ */
