@@ -8,7 +8,8 @@ import {
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { PenBox } from "lucide-react";
-import { useState } from "react";
+
+
 
 
 
@@ -21,7 +22,7 @@ export default function Navbar() {
   return (
     <NavigationMenu className="p-4 max-w-[80%] left-1/2 -translate-x-1/2 gap-10 justify-around">
       <NavigationMenuList>
-        <HamburgerMenu></HamburgerMenu>
+        
         <Link href={"/"} passHref legacyBehavior>
           <NavigationMenuLink className="uppercase text-xl font-bold flex items-center gap-2">
             <PenBox />
@@ -29,7 +30,9 @@ export default function Navbar() {
           </NavigationMenuLink>
         </Link>
       </NavigationMenuList>
+      <div className="respinsive-navbar">
 
+      
       <NavigationMenuList className="gap-10">
         {links.map((link) => (
           <NavigationMenuItem key={link}>
@@ -41,7 +44,7 @@ export default function Navbar() {
           </NavigationMenuItem>
         ))}
       </NavigationMenuList>
-
+      </div>
       <NavigationMenuList className="gap-4">
         <NavigationMenuItem>
           <Button

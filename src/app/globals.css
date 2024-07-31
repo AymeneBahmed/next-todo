@@ -67,3 +67,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+@media (max-width:1050px) {
+.respinsive-navbar{
+  display:none;
+}
+}
