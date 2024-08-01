@@ -67,20 +67,6 @@
     @apply bg-background text-foreground;
   }
 }
-.hamburger-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgb(26, 24, 24);
-  height: 100vh;
-  color: white;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 
 @media (max-width: 1050px) {
   .respinsive-navbar {

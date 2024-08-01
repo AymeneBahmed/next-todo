@@ -70,7 +70,7 @@ export function HamburgerMenu() {
         <Image src={hamburgerIcon} width={45} alt="Hamburger Icon" />
       </button>
       <div
-        className="hamburger-container fixed w-[65vh] h-full z-20"
+        className=" flex flex-col justify-center items-center fixed top-0 left-0  bg-slate-950 text-white    w-[100%] h-full z-20"
         style={{
           transform: isMenuOpen ? "translateX(0)" : "translateX(-100%)",
           transition: "transform 0.3s ease-in-out",
@@ -80,11 +80,12 @@ export function HamburgerMenu() {
           <li className="flex flex-col gap-3 fixed w-full justify-center items-center ">
             {links.map((link, index) => (
               <>
-              {index !== 0 && <span className="bg-white bg-opacity-70 w-[65%] h-[0.1vh]"></span>}
+                {index !== 0 && (
+                  <span className="bg-white bg-opacity-70 w-[65%] h-[0.1vh]"></span>
+                )}
                 <a href="" className="mt-3">
                   {link}
                 </a>
-                
               </>
             ))}
           </li>
