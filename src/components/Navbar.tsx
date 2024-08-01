@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from 'next/image';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -10,6 +11,7 @@ import {
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { PenBox } from "lucide-react";
+import  HamburgerIcon from "../assets/burger-list-menu-com.svg";
 
 const links = ["Home", "Pricing", "Features", "About", "Contact"];
 
@@ -63,7 +65,9 @@ export function HamburgerMenu() {
 
   return (
     <>
-      <button onClick={toggleMenu}>click</button>
+      <button onClick={toggleMenu}>
+      <Image src={HamburgerIcon} alt="Hamburger Icon" />
+      </button>
       <div
         className={`Hamburger-container fixed w-[65vh] h-full z-20 ${
           menuOpen ? "menu-open" : ""
