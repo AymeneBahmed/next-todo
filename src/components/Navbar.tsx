@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { PenBox } from "lucide-react";
-import HamburgerIcon from "../assets/burger-list-menu-com.svg";
+import hamburgerIcon from "../assets/burger-list-menu-com.svg";
 
 const links = ["Home", "Pricing", "Features", "About", "Contact"];
 
@@ -57,23 +57,21 @@ export default function Navbar() {
 }
 
 export function HamburgerMenu() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function toggleMenu() {
-    setMenuOpen((menuOpen) => !menuOpen);
+    setIsMenuOpen(!isMenuOpen);
   }
 
   return (
     <>
       <button onClick={toggleMenu}>
-        <Image src={HamburgerIcon} width={45} alt="Hamburger Icon" />
+        <Image src={hamburgerIcon} width={45} alt="Hamburger Icon" />
       </button>
       <div
-        className={`Hamburger-container fixed w-[65vh] h-full z-20 ${
-          menuOpen ? "menu-open" : ""
-        }`}
+        className="Hamburger-container fixed w-[65vh] h-full z-20"
         style={{
-          transform: menuOpen ? "translateX(0)" : "translateX(-100%)",
+          transform: isMenuOpen ? "translateX(0)" : "translateX(-100%)",
           transition: "transform 0.3s ease-in-out",
         }}
       >
@@ -84,7 +82,6 @@ export function HamburgerMenu() {
             </a>
             <span className="separator"></span>
             <a href="" className="mt-3">
-              {" "}
               Pricing
             </a>
             <span className="separator"></span>
