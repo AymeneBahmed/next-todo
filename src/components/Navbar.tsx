@@ -70,7 +70,9 @@ export function HamburgerMenu() {
         <Image src={hamburgerIcon} width={45} alt="Hamburger Icon" />
       </button>
       <div
-        className=" flex flex-col justify-center items-center fixed top-0 left-0  bg-slate-950 text-white    w-[100%] h-full z-20"
+        className={`flex flex-col justify-center items-center fixed top-0 left-0  bg-slate-950 text-white w-[100%] h-full z-20 transform ${
+          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 ease-in-out`}
         style={{
           transform: isMenuOpen ? "translateX(0)" : "translateX(-100%)",
           transition: "transform 0.3s ease-in-out",
