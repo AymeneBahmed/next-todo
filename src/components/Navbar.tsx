@@ -69,7 +69,7 @@ export function HamburgerMenu() {
         <Image src={hamburgerIcon} width={45} alt="Hamburger Icon" />
       </button>
       <div
-        className="Hamburger-container fixed w-[65vh] h-full z-20"
+        className="hamburger-container fixed w-[65vh] h-full z-20"
         style={{
           transform: isMenuOpen ? "translateX(0)" : "translateX(-100%)",
           transition: "transform 0.3s ease-in-out",

@@ -67,7 +67,7 @@
     @apply bg-background text-foreground;
   }
 }
-.Hamburger-container {
+.hamburger-container {
   position: absolute;
   top: 0;
   left: 0;
