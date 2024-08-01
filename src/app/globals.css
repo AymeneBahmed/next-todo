@@ -67,22 +67,28 @@
     @apply bg-background text-foreground;
   }
 }
-
-.Hamburger-container.menu-open{
-position: absolute;
-top :0;
- background: red;
-height: 100%;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
- 
+.Hamburger-container{
+  position: absolute;
+  top :0;
+  left: 0;
+   background: red;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
 }
+
 
 @media (max-width:1050px) {
 .respinsive-navbar{
   display:none;
+}
+.nav-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 }
 
