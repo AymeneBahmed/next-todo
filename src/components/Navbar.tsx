@@ -80,11 +80,11 @@ export function HamburgerMenu() {
             <span className="separator"></span>
             <a href="" className="mt-3"> Pricing</a>
             <span className="separator"></span>
-            <a href="" className="mt-3">Pricing</a>
+            <a href="" className="mt-3">Features</a>
             <span className="separator"></span>
-            <a href="" className="mt-3">Pricing</a>
+            <a href="" className="mt-3">About</a>
             <span className="separator"></span>
-            <a href="" className="mt-3">Pricing</a>
+            <a href="" className="mt-3">Contact</a>
             
           </li>
         </ul>
