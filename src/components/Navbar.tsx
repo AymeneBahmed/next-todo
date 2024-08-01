@@ -12,6 +12,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { PenBox } from "lucide-react";
 import hamburgerIcon from "../assets/burger-list-menu-com.svg";
+import { link } from "fs";
 
 const links = ["Home", "Pricing", "Features", "About", "Contact"];
 
@@ -77,25 +78,15 @@ export function HamburgerMenu() {
       >
         <ul className="flex flex-col justify-center  items-center relative">
           <li className="flex flex-col gap-3 fixed w-full justify-center items-center ">
-            <a href="" className="mt-3">
-              Home
-            </a>
-            <span className="separator"></span>
-            <a href="" className="mt-3">
-              Pricing
-            </a>
-            <span className="separator"></span>
-            <a href="" className="mt-3">
-              Features
-            </a>
-            <span className="separator"></span>
-            <a href="" className="mt-3">
-              About
-            </a>
-            <span className="separator"></span>
-            <a href="" className="mt-3">
-              Contact
-            </a>
+            {links.map((link, index) => (
+              <>
+              {index !== 0 && <span className="bg-white bg-opacity-70 w-[65%] h-[0.1vh]"></span>}
+                <a href="" className="mt-3">
+                  {link}
+                </a>
+                
+              </>
+            ))}
           </li>
         </ul>
         <button
