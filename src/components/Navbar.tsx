@@ -73,13 +73,19 @@ export function HamburgerMenu() {
           transition: "transform 0.3s ease-in-out",
         }}
       >
-        <ul className="flex flex-col justify-center items-center relative">
-          <li className="flex flex-col gap-7 fixed">
-            <a href="">Home</a>
-            <a href="">Pricing</a>
-            <a href="">Pricing</a>
-            <a href="">Pricing</a>
-            <a href="">Pricing</a>
+        
+        <ul className="flex flex-col justify-center  items-center relative">
+          <li className="flex flex-col gap-3 fixed w-full justify-center items-center ">
+            <a href="" className="mt-3">Home</a>
+            <span className="separator"></span>
+            <a href="" className="mt-3"> Pricing</a>
+            <span className="separator"></span>
+            <a href="" className="mt-3">Pricing</a>
+            <span className="separator"></span>
+            <a href="" className="mt-3">Pricing</a>
+            <span className="separator"></span>
+            <a href="" className="mt-3">Pricing</a>
+            
           </li>
         </ul>
         <button

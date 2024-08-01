@@ -71,13 +71,19 @@
   position: absolute;
   top :0;
   left: 0;
-   background: red;
+   background: rgb(26, 24, 24);
   height: 100vh;
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   
+}
+.separator{
+  background-color: rgba(255, 255, 255, 0.685);
+  width: 65%;
+  height: 0.1vh;
 }
 
 
