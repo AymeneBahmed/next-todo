@@ -66,7 +66,7 @@ export function HamburgerMenu() {
   return (
     <>
       <button onClick={toggleMenu}>
-      <Image src={HamburgerIcon} alt="Hamburger Icon" />
+      <Image src={HamburgerIcon} width={45} alt="Hamburger Icon" />
       </button>
       <div
         className={`Hamburger-container fixed w-[65vh] h-full z-20 ${
