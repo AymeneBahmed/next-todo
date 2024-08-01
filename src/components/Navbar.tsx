@@ -21,6 +21,11 @@ export default function Navbar() {
 
   return (
     <NavigationMenu className="p-4 max-w-[80%] left-1/2 -translate-x-1/2 gap-10 justify-around">
+    <div className="Hamburger">
+      <HamburgerMenu>
+
+      </HamburgerMenu>
+    </div>
       <NavigationMenuList>
         
         <Link href={"/"} passHref legacyBehavior>
@@ -29,6 +34,7 @@ export default function Navbar() {
             Todo
           </NavigationMenuLink>
         </Link>
+      
       </NavigationMenuList>
       <div className="respinsive-navbar">
 
