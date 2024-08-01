@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
-import { HamburgerMenu } from "@/components/Navbar";
+
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -22,9 +22,6 @@ export default function RootLayout({
       <body className={`h-[200vh] ${inter.className}`}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <div className="nav-container">
-            <div className="Hamburger">
-              <HamburgerMenu />
-            </div>
             <Navbar />
           </div>
           {children}
