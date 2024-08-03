@@ -64,13 +64,16 @@ export default function Navbar() {
 function HamburgerMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  function toggleMenu() {
-    setIsMenuOpen(!isMenuOpen);
+  function openVerticalMenu() {
+    setIsMenuOpen(true);
+  }
+  function closeVerticalMenu() {
+    setIsMenuOpen(false);
   }
 
   return (
     <>
-      <button onClick={toggleMenu}>
+      <button onClick={openVerticalMenu}>
         <Image src={hamburgerIcon} width={45} alt="Hamburger Icon" />
       </button>
       <div
@@ -92,7 +95,7 @@ function HamburgerMenu() {
         </ul>
         <button
           className=" text-3xl absolute top-[2rem] right-[2rem]"
-          onClick={toggleMenu}
+          onClick={closeVerticalMenu}
         >
           X
         </button>
