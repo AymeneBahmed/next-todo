@@ -4,7 +4,6 @@ import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
 
-
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
@@ -21,9 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`h-[200vh] ${inter.className}`}>
         <ThemeProvider attribute="class" defaultTheme="light">
-          <div className="nav-container">
-            <Navbar />
-          </div>
+          <Navbar />
           {children}
         </ThemeProvider>
       </body>
