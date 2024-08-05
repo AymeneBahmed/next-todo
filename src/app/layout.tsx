@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`h-[200vh] ${inter.className}`}>
+      <body className={`h-[100dvh] ${inter.className}`}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <LayoutProvider>{children}</LayoutProvider>
         </ThemeProvider>
