@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
-import Navbar from "@/components/Navbar";
+import LayoutProvider from "@/components/LayoutProvider";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -20,8 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`h-[200vh] ${inter.className}`}>
         <ThemeProvider attribute="class" defaultTheme="light">
-          <Navbar />
-          {children}
+          <LayoutProvider>{children}</LayoutProvider>
         </ThemeProvider>
       </body>
     </html>
