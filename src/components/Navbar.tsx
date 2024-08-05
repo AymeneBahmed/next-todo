@@ -11,7 +11,7 @@ const links = ["Home", "Pricing", "Features", "About", "Contact"];
 
 export default function Navbar() {
   return (
-    <nav className="flex justify-between w-[70%] mx-auto mt-5 px-10 rounded-xl">
+    <nav className="flex justify-between w-[70%] mx-auto mt-5 rounded-xl max-[1050px]:w-[90%]">
       <HamburgerMenu />
 
       <Link
@@ -65,10 +65,10 @@ function HamburgerMenu() {
       {createPortal(
         <div
           className={`flex flex-col justify-center items-center fixed top-0 left-0 ${
-            isMenuOpen ? "translate-x-0" : "-translate-x-[6999px]"
-          } bg-slate-950 text-white w-screen h-screen z-20 transform transition-transform duration-300 ease-in-out min-[1050px]:hidden`}
+            isMenuOpen ? "translate-x-0" : "-translate-x-[2999px]"
+          } bg-slate-950 text-white w-screen h-screen z-20 transform transition-transform duration-500 min-[1050px]:hidden`}
         >
-          <ul className="flex flex-col justify-center  items-center">
+          <ul className="flex flex-col w-5/6 justify-center items-center">
             <li className="flex flex-col gap-3 w-full justify-center items-center ">
               {links.map((link, index) => (
                 <Fragment key={link}>
