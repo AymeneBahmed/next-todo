@@ -34,13 +34,17 @@ export default function Navbar() {
       </ul>
 
       <div className="gap-4 flex">
-        <Button
-          variant="outline"
-          className="border-primary text-primary hover:bg-primary/5 hover:text-primary"
-        >
-          Login
-        </Button>
-        <Button>Sign Up</Button>
+        <Link href={"/login"}>
+          <Button
+            variant="outline"
+            className="border-primary text-primary hover:bg-primary/5 hover:text-primary"
+          >
+            Login
+          </Button>
+        </Link>
+        <Link href={"/signup"}>
+          <Button>Sign Up</Button>
+        </Link>
       </div>
     </nav>
   );
