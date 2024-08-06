@@ -24,6 +24,10 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 
 const formSchema = z.object({
+  firstName: z
+    .string()
+    .min(1, { message: "The name should contain at least 1 character" }),
+  lastName: z.string().optional(),
   username: z
     .string()
     .min(3, { message: "Username must be at least of 3 characters" }),
@@ -45,7 +49,7 @@ export default function SignupForm() {
 
   return (
     <div className="bg-blue-100 size-full grid place-content-center">
-      <Card className="w-[25rem]">
+      <Card className="w-[27rem]">
         <CardHeader className="text-center">
           <CardTitle className="text-[2rem]">Sign Up</CardTitle>
           <CardDescription>Get ready to create todos</CardDescription>
@@ -53,11 +57,50 @@ export default function SignupForm() {
         <CardContent>
           <Form {...form}>
             <form action="" onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="flex gap-5 [&>*]:w-[50%]">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field, fieldState }) => (
+                    <FormItem>
+                      <FormLabel>First Name</FormLabel>
+                      <FormControl
+                        className={`border-blue-400 border-2 ${
+                          fieldState.invalid && "border-red-400 !ring-red-600"
+                        }`}
+                      >
+                        <Input placeholder="John" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field, fieldState }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Last Name{" "}
+                        <span className="text-gray-500 italic">(Optional)</span>
+                      </FormLabel>
+                      <FormControl
+                        className={`border-blue-400 border-2 ${
+                          fieldState.invalid && "border-red-400 !ring-red-600"
+                        }`}
+                      >
+                        <Input placeholder="Cena" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name="username"
                 render={({ field, fieldState }) => (
-                  <FormItem>
+                  <FormItem className="mt-5">
                     <FormLabel>Username</FormLabel>
                     <FormControl
                       className={`border-blue-400 border-2 ${
