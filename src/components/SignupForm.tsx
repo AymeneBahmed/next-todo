@@ -22,28 +22,14 @@ import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
 import Link from "next/link";
 import { Button } from "./ui/button";
-
-const formSchema = z.object({
-  firstName: z
-    .string()
-    .min(1, { message: "The name should contain at least 1 character" }),
-  lastName: z.string().optional(),
-  username: z
-    .string()
-    .min(3, { message: "Username must be at least of 3 characters" }),
-  email: z.string().email(),
-  password: z
-    .string()
-    .min(6, { message: "The password should contain at least 6 characters" }),
-  agreeToTermsAndConditions: z.boolean().default(false),
-});
+import { SignupSchema } from "@/lib/schemas";
 
 export default function SignupForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof SignupSchema>>({
+    resolver: zodResolver(SignupSchema),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof SignupSchema>) {
     console.log(values);
   }
 
