@@ -55,8 +55,8 @@ export default function SignupForm() {
   }
 
   return (
-    <div className="bg-blue-100 size-full grid place-content-center">
-      <Card className="w-[27rem]">
+    <div className="bg-blue-300 size-full grid place-content-center">
+      <Card className="w-[27rem] border-[4px] border-primary">
         <CardHeader className="text-center">
           <CardTitle className="text-[2rem]">Sign Up</CardTitle>
           <CardDescription>Get ready to create todos</CardDescription>
