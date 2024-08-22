@@ -3,8 +3,9 @@
 import { getUserByEmail } from "@/db/users";
 import { createStackUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { SignupSchema } from "@/lib/schemas";
+import { LoginSchema, SignupSchema } from "@/lib/schemas";
 import { stackServerApp } from "@/stack";
+import { cookies } from "next/headers";
 import { z } from "zod";
 
 export async function signup(values: z.infer<typeof SignupSchema>) {
@@ -64,4 +65,32 @@ export async function verifyEmail(code: string): Promise<
   }
 
   return { success: "Email verified successfully!" };
+}
+
+export async function login(values: z.infer<typeof LoginSchema>) {
+  try {
+    const validatedFields = LoginSchema.safeParse(values);
+
+    if (!validatedFields.success) {
+      return { error: "Invalid fields" };
+    }
+
+    const data = validatedFields.data;
+    const existingUser = await getUserByEmail(data.email);
+
+    if (!existingUser) {
+      return { error: "User does not exist!" };
+    }
+  } catch {
+    return { error: "Somethgin went wrong!" };
+  }
+
+  const error = await stackServerApp.signInWithCredential({
+    email: values.email,
+    password: values.password,
+  });
+
+  if (error) {
+    return { error: "Something went wrong!" };
+  }
 }
