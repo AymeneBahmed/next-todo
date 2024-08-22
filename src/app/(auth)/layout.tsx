@@ -5,7 +5,7 @@ export default function AuthLayout({
 }) {
   return (
     <>
-      <div className="bg-blue-300 size-full grid place-content-center">
+      <div className="bg-gradient-to-b from-teal-400 to-blue-500 size-full grid place-content-center">
         {children}
       </div>
     </>
