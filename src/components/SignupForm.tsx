@@ -23,14 +23,15 @@ import { Checkbox } from "./ui/checkbox";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { SignupSchema } from "@/lib/schemas";
+import { signup } from "@/app/actions";
 
 export default function SignupForm() {
   const form = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),
   });
 
-  function onSubmit(values: z.infer<typeof SignupSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof SignupSchema>) {
+    await signup(values);
   }
 
   return (
