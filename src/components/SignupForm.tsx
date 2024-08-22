@@ -24,14 +24,34 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { SignupSchema } from "@/lib/schemas";
 import { signup } from "@/app/actions";
+import FormError from "./FormError";
+import FormSuccess from "./FormSuccess";
+import { useState, useTransition } from "react";
 
 export default function SignupForm() {
   const form = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),
   });
+  const [error, setError] = useState<string | null>();
+  const [success, setSuccess] = useState<string | null>();
+  const [isPending, startTransition] = useTransition();
 
   async function onSubmit(values: z.infer<typeof SignupSchema>) {
-    await signup(values);
+    startTransition(async () => {
+      const signupState = await signup(values);
+
+      if (signupState.error) {
+        setError(signupState.error);
+        setSuccess(null);
+
+        return;
+      }
+
+      if (signupState.success) {
+        setSuccess(signupState.success);
+        setError(null);
+      }
+    });
   }
 
   return (
@@ -163,7 +183,13 @@ export default function SignupForm() {
                   </FormItem>
                 )}
               />
-              <Button className="w-full mt-10" type="submit">
+              {error && <FormError message={error} />}
+              {success && <FormSuccess message={success} />}
+              <Button
+                className="w-full mt-10"
+                type="submit"
+                disabled={isPending}
+              >
                 Sign Up
               </Button>
             </form>
