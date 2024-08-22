@@ -7,6 +7,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
@@ -24,6 +25,7 @@ import { LoginSchema } from "@/lib/schemas";
 import { login } from "@/app/actions";
 import FormError from "./FormError";
 import { useState, useTransition } from "react";
+import Link from "next/link";
 
 export default function LoginForm() {
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -50,9 +52,11 @@ export default function LoginForm() {
     <Card className="w-[27rem] border-[4px] border-primary">
       <CardHeader className="text-center">
         <CardTitle className="text-[2rem]">Login</CardTitle>
-        <CardDescription>Get ready to create todos</CardDescription>
+        <CardDescription className="relative -top-2">
+          Get ready to create todos
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pb-0">
         <Form {...form}>
           <form action="" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
@@ -81,7 +85,16 @@ export default function LoginForm() {
               name="password"
               render={({ field, fieldState }) => (
                 <FormItem className="mt-5">
-                  <FormLabel>Password</FormLabel>
+                  <div className="flex items-center justify-between">
+                    <FormLabel>Password</FormLabel>
+                    <Button
+                      variant="link"
+                      className="underline p-0 h-fit"
+                      asChild
+                    >
+                      <Link href="/">Forgot password?</Link>
+                    </Button>
+                  </div>
                   <FormControl
                     className={`border-blue-400 border-2 ${
                       fieldState.invalid && "border-red-400 !ring-red-600"
@@ -104,6 +117,14 @@ export default function LoginForm() {
           </form>
         </Form>
       </CardContent>
+      <CardFooter className="flex justify-center mt-0">
+        <div className="text-sm">
+          Don&apos;t have an account?
+          <Button variant="link" className="underline pl-1" asChild>
+            <Link href="/signup">Sign up</Link>
+          </Button>
+        </div>
+      </CardFooter>
     </Card>
   );
 }
