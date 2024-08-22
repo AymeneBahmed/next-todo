@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id            Int     @id @default(autoincrement())
+  id            String  @id
   username      String  @unique
   email         String  @unique
   emailVerified Boolean @default(false)
@@ -36,6 +36,6 @@ model Todo {
   description  String?
   creationDate DateTime
   priority     Priority
-  userId       Int
+  userId       String
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
