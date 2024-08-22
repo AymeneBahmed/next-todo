@@ -55,66 +55,27 @@ export default function SignupForm() {
   }
 
   return (
-    <div className="bg-blue-300 size-full grid place-content-center">
-      <Card className="w-[27rem] border-[4px] border-primary">
-        <CardHeader className="text-center">
-          <CardTitle className="text-[2rem]">Sign Up</CardTitle>
-          <CardDescription>Get ready to create todos</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form action="" onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="flex gap-5 [&>*]:w-[50%]">
-                <FormField
-                  control={form.control}
-                  name="firstName"
-                  render={({ field, fieldState }) => (
-                    <FormItem>
-                      <FormLabel>First Name</FormLabel>
-                      <FormControl
-                        className={`border-blue-400 border-2 ${
-                          fieldState.invalid && "border-red-400 !ring-red-600"
-                        }`}
-                      >
-                        <Input placeholder="John" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="lastName"
-                  render={({ field, fieldState }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Last Name{" "}
-                        <span className="text-gray-500 italic">(Optional)</span>
-                      </FormLabel>
-                      <FormControl
-                        className={`border-blue-400 border-2 ${
-                          fieldState.invalid && "border-red-400 !ring-red-600"
-                        }`}
-                      >
-                        <Input placeholder="Cena" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+    <Card className="w-[27rem] border-[4px] border-primary">
+      <CardHeader className="text-center">
+        <CardTitle className="text-[2rem]">Sign Up</CardTitle>
+        <CardDescription>Get ready to create todos</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form action="" onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex gap-5 [&>*]:w-[50%]">
               <FormField
                 control={form.control}
-                name="username"
+                name="firstName"
                 render={({ field, fieldState }) => (
-                  <FormItem className="mt-5">
-                    <FormLabel>Username</FormLabel>
+                  <FormItem>
+                    <FormLabel>First Name</FormLabel>
                     <FormControl
                       className={`border-blue-400 border-2 ${
                         fieldState.invalid && "border-red-400 !ring-red-600"
                       }`}
                     >
-                      <Input placeholder="Enter your username" {...field} />
+                      <Input placeholder="John" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -122,80 +83,113 @@ export default function SignupForm() {
               />
               <FormField
                 control={form.control}
-                name="email"
+                name="lastName"
                 render={({ field, fieldState }) => (
-                  <FormItem className="mt-5">
-                    <FormLabel>Email</FormLabel>
-                    <FormControl
-                      className={`border-blue-400 border-2 ${
-                        fieldState.invalid && "border-red-400 !ring-red-600"
-                      }`}
-                    >
-                      <Input
-                        {...field}
-                        type="email"
-                        placeholder="Enter your gmail"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field, fieldState }) => (
-                  <FormItem className="mt-5">
-                    <FormLabel>Password</FormLabel>
-                    <FormControl
-                      className={`border-blue-400 border-2 ${
-                        fieldState.invalid && "border-red-400 !ring-red-600"
-                      }`}
-                    >
-                      <Input
-                        type="password"
-                        placeholder="Enter your password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="agreeToTermsAndConditions"
-                render={({ field }) => (
-                  <FormItem className="mt-10 flex space-y-0 gap-2">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        required
-                      />
-                    </FormControl>
+                  <FormItem>
                     <FormLabel>
-                      I agree to{" "}
-                      <Link href="/" className="underline text-primary">
-                        Terms and Conditions
-                      </Link>
+                      Last Name{" "}
+                      <span className="text-gray-500 italic">(Optional)</span>
                     </FormLabel>
+                    <FormControl
+                      className={`border-blue-400 border-2 ${
+                        fieldState.invalid && "border-red-400 !ring-red-600"
+                      }`}
+                    >
+                      <Input placeholder="Cena" {...field} />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
-              {error && <FormError message={error} />}
-              {success && <FormSuccess message={success} />}
-              <Button
-                className="w-full mt-10"
-                type="submit"
-                disabled={isPending}
-              >
-                Sign Up
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-    </div>
+            </div>
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field, fieldState }) => (
+                <FormItem className="mt-5">
+                  <FormLabel>Username</FormLabel>
+                  <FormControl
+                    className={`border-blue-400 border-2 ${
+                      fieldState.invalid && "border-red-400 !ring-red-600"
+                    }`}
+                  >
+                    <Input placeholder="Enter your username" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field, fieldState }) => (
+                <FormItem className="mt-5">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl
+                    className={`border-blue-400 border-2 ${
+                      fieldState.invalid && "border-red-400 !ring-red-600"
+                    }`}
+                  >
+                    <Input
+                      {...field}
+                      type="email"
+                      placeholder="Enter your gmail"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field, fieldState }) => (
+                <FormItem className="mt-5">
+                  <FormLabel>Password</FormLabel>
+                  <FormControl
+                    className={`border-blue-400 border-2 ${
+                      fieldState.invalid && "border-red-400 !ring-red-600"
+                    }`}
+                  >
+                    <Input
+                      type="password"
+                      placeholder="Enter your password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="agreeToTermsAndConditions"
+              render={({ field }) => (
+                <FormItem className="mt-10 flex space-y-0 gap-2">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      required
+                    />
+                  </FormControl>
+                  <FormLabel>
+                    I agree to{" "}
+                    <Link href="/" className="underline text-primary">
+                      Terms and Conditions
+                    </Link>
+                  </FormLabel>
+                </FormItem>
+              )}
+            />
+            {error && <FormError message={error} />}
+            {success && <FormSuccess message={success} />}
+            <Button className="w-full mt-10" type="submit" disabled={isPending}>
+              Sign Up
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }

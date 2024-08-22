@@ -45,25 +45,23 @@ export default function EmailVerificationPage() {
   }, [code]);
 
   return (
-    <div className="bg-blue-300 size-full grid place-content-center">
-      <Card className="w-[24rem]">
-        <CardHeader className="text-center">
-          <CardTitle>Verifying your email</CardTitle>
-          {!error && !success && (
-            <CardDescription>Please wait...</CardDescription>
-          )}
-        </CardHeader>
-        <CardContent className="flex justify-center">
-          {!error && !success && <PuffLoader color="blue" className="my-10" />}
-          {error && <FormError message={error} />}
-          {success && <FormSuccess message={success} />}
-        </CardContent>
-        <CardFooter className="flex justify-center ">
-          <Button asChild variant="link" className="underline">
-            <Link href="/login">Back to login</Link>
-          </Button>
-        </CardFooter>
-      </Card>
-    </div>
+    <Card className="w-[24rem]">
+      <CardHeader className="text-center">
+        <CardTitle>Verifying your email</CardTitle>
+        {!error && !success && (
+          <CardDescription>Please wait...</CardDescription>
+        )}
+      </CardHeader>
+      <CardContent className="flex justify-center">
+        {!error && !success && <PuffLoader color="blue" className="my-10" />}
+        {error && <FormError message={error} />}
+        {success && <FormSuccess message={success} />}
+      </CardContent>
+      <CardFooter className="flex justify-center ">
+        <Button asChild variant="link" className="underline">
+          <Link href="/login">Back to login</Link>
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }
