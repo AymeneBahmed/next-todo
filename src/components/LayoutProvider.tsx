@@ -9,7 +9,11 @@ export default function LayoutProvider({
   children: React.ReactNode;
 }) {
   const pathname = usePathname() as (typeof excludedPaths)[number];
-  const excludedPaths: `/${string}`[] = ["/login", "/signup"];
+  const excludedPaths: `/${string}`[] = [
+    "/login",
+    "/signup",
+    "/email-verification",
+  ];
 
   return (
     <>
