@@ -14,10 +14,12 @@ datasource db {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  username  String  @unique
-  firstName String  @db.VarChar(30)
-  lastName  String? @db.VarChar(30)
+  id            Int     @id @default(autoincrement())
+  username      String  @unique
+  email         String  @unique
+  emailVerified Boolean @default(false)
+  firstName     String  @db.VarChar(30)
+  lastName      String? @db.VarChar(30)
 
   Todo Todo[]
 }
