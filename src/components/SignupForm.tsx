@@ -7,6 +7,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
@@ -58,9 +59,11 @@ export default function SignupForm() {
     <Card className="w-[27rem] border-[4px] border-primary">
       <CardHeader className="text-center">
         <CardTitle className="text-[2rem]">Sign Up</CardTitle>
-        <CardDescription>Get ready to create todos</CardDescription>
+        <CardDescription className="relative -top-2">
+          Create an account
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pb-0">
         <Form {...form}>
           <form action="" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex gap-5 [&>*]:w-[50%]">
@@ -190,6 +193,14 @@ export default function SignupForm() {
           </form>
         </Form>
       </CardContent>
+      <CardFooter className="flex justify-center mt-0">
+        <div className="text-sm">
+          Already have an account?
+          <Button variant="link" className="underline pl-1" asChild>
+            <Link href="/login">Login</Link>
+          </Button>
+        </div>
+      </CardFooter>
     </Card>
   );
 }
