@@ -16,7 +16,7 @@ export async function createStackUser(email: string, password: string) {
           "x-stack-access-type": "server",
           "x-stack-secret-server-key": process.env.STACK_SECRET_SERVER_KEY!,
         },
-        body: `{"email":"${email}","password":"${password}","verification_callback_url":"http://localhost:3000/handler/email-verification"}`,
+        body: `{"email":"${email}","password":"${password}","verification_callback_url":"http://localhost:3000/email-verification"}`,
       }
     );
     const data: CreateStackUserProps = await response.json();
