@@ -5,7 +5,6 @@ import { createStackUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { LoginSchema, SignupSchema } from "@/lib/schemas";
 import { stackServerApp } from "@/stack";
-import { cookies } from "next/headers";
 import { z } from "zod";
 
 export async function signup(values: z.infer<typeof SignupSchema>) {
