@@ -74,7 +74,7 @@ export default function SignupForm() {
                   <FormItem>
                     <FormLabel>First Name</FormLabel>
                     <FormControl
-                      className={`border-blue-400 border-2 ${
+                      className={`bg-gray-100 ${
                         fieldState.invalid && "border-red-400 !ring-red-600"
                       }`}
                     >
@@ -94,7 +94,7 @@ export default function SignupForm() {
                       <span className="text-gray-500 italic">(Optional)</span>
                     </FormLabel>
                     <FormControl
-                      className={`border-blue-400 border-2 ${
+                      className={`bg-gray-100 ${
                         fieldState.invalid && "border-red-400 !ring-red-600"
                       }`}
                     >
@@ -112,7 +112,7 @@ export default function SignupForm() {
                 <FormItem className="mt-5">
                   <FormLabel>Username</FormLabel>
                   <FormControl
-                    className={`border-blue-400 border-2 ${
+                    className={`bg-gray-100 ${
                       fieldState.invalid && "border-red-400 !ring-red-600"
                     }`}
                   >
@@ -129,7 +129,7 @@ export default function SignupForm() {
                 <FormItem className="mt-5">
                   <FormLabel>Email</FormLabel>
                   <FormControl
-                    className={`border-blue-400 border-2 ${
+                    className={`bg-gray-100 ${
                       fieldState.invalid && "border-red-400 !ring-red-600"
                     }`}
                   >
@@ -150,7 +150,7 @@ export default function SignupForm() {
                 <FormItem className="mt-5">
                   <FormLabel>Password</FormLabel>
                   <FormControl
-                    className={`border-blue-400 border-2 ${
+                    className={`bg-gray-100 ${
                       fieldState.invalid && "border-red-400 !ring-red-600"
                     }`}
                   >

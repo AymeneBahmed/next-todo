@@ -66,7 +66,7 @@ export default function LoginForm() {
                 <FormItem className="mt-2">
                   <FormLabel>Email</FormLabel>
                   <FormControl
-                    className={`border-blue-400 border-2 ${
+                    className={`bg-gray-100 ${
                       fieldState.invalid && "border-red-400 !ring-red-600"
                     }`}
                   >
@@ -96,7 +96,7 @@ export default function LoginForm() {
                     </Button>
                   </div>
                   <FormControl
-                    className={`border-blue-400 border-2 ${
+                    className={`bg-gray-100 ${
                       fieldState.invalid && "border-red-400 !ring-red-600"
                     }`}
                   >
