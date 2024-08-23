@@ -4,7 +4,6 @@ import { stackServerApp } from "../stack";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
-import LayoutProvider from "@/components/LayoutProvider";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -24,7 +23,7 @@ export default function RootLayout({
         <StackProvider app={stackServerApp}>
           <StackTheme>
             <ThemeProvider attribute="class" defaultTheme="light">
-              <LayoutProvider>{children}</LayoutProvider>
+              {children}
             </ThemeProvider>
           </StackTheme>
         </StackProvider>
