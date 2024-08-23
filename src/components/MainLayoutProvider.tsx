@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 
-export default function LayoutProvider({
+export default function MainLayoutProvider({
   children,
 }: {
   children: React.ReactNode;
