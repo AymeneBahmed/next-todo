@@ -18,7 +18,7 @@ export default function Social({ disabled }: { disabled: boolean }) {
       onClick={loginWithGoogle}
     >
       <FcGoogle size={19} />
-      <div>Sign up with Google</div>
+      <div>Continue with Google</div>
     </Button>
   );
 }
