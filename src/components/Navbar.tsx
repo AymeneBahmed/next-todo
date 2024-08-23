@@ -31,7 +31,10 @@ export default function Navbar() {
       <ul className="gap-10 max-[1050px]:hidden flex items-center">
         {links.map((link) => (
           <li key={link}>
-            <Link href="/" className="hover:text-primary hover:underline">
+            <Link
+              href="/"
+              className="hover:text-primary hover:underline underline-offset-[6px]"
+            >
               {link}
             </Link>
           </li>
