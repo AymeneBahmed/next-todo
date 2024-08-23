@@ -1,4 +1,5 @@
 "use client";
+
 import { Fragment, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,10 +7,14 @@ import { Button } from "./ui/button";
 import { PenBox } from "lucide-react";
 import hamburgerIcon from "../assets/burger-list-menu-com.svg";
 import { createPortal } from "react-dom";
+import { useUser } from "@stackframe/stack";
+import AvatarDropdownMenu from "./AvatarDropdownMenu";
 
 const links = ["Home", "Pricing", "Features", "About", "Contact"];
 
 export default function Navbar() {
+  const user = useUser();
+
   return (
     <nav className="flex justify-between w-[70%] mx-auto mt-5 rounded-xl max-[1050px]:w-[90%]">
       <HamburgerMenu />
@@ -33,19 +38,23 @@ export default function Navbar() {
         ))}
       </ul>
 
-      <div className="gap-4 flex">
-        <Link href={"/login"}>
-          <Button
-            variant="outline"
-            className="border-primary text-primary hover:bg-primary/5 hover:text-primary"
-          >
-            Login
-          </Button>
-        </Link>
-        <Link href={"/signup"}>
-          <Button>Sign Up</Button>
-        </Link>
-      </div>
+      {user ? (
+        <AvatarDropdownMenu />
+      ) : (
+        <div className="gap-4 flex">
+          <Link href={"/login"}>
+            <Button
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary/5 hover:text-primary"
+            >
+              Login
+            </Button>
+          </Link>
+          <Link href={"/signup"}>
+            <Button>Sign Up</Button>
+          </Link>
+        </div>
+      )}
     </nav>
   );
 }
