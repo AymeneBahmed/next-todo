@@ -16,7 +16,7 @@ export default function Navbar() {
   const user = useUser();
 
   return (
-    <nav className="flex justify-between w-[70%] mx-auto mt-5 rounded-xl max-[1050px]:w-[90%]">
+    <nav className="flex justify-between w-[80%] mt-4 p-3 rounded-xl max-[1050px]:w-[90%] fixed bg-white/80 backdrop-blur-md left-1/2 -translate-x-1/2">
       <HamburgerMenu />
 
       <Link
