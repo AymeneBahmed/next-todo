@@ -26,6 +26,8 @@ import { login } from "@/app/actions";
 import FormError from "./FormError";
 import { useState, useTransition } from "react";
 import Link from "next/link";
+import Social from "./Social";
+import Divider from "./Divider";
 
 export default function LoginForm() {
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -57,6 +59,10 @@ export default function LoginForm() {
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-0">
+        <Social disabled={isPending} />
+
+        <Divider text="or" />
+
         <Form {...form}>
           <form action="" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField

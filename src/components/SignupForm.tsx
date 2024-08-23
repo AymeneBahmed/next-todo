@@ -28,6 +28,8 @@ import { signup } from "@/app/actions";
 import FormError from "./FormError";
 import FormSuccess from "./FormSuccess";
 import { useState, useTransition } from "react";
+import Social from "./Social";
+import Divider from "./Divider";
 
 export default function SignupForm() {
   const form = useForm<z.infer<typeof SignupSchema>>({
@@ -64,6 +66,10 @@ export default function SignupForm() {
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-0">
+        <Social disabled={isPending} />
+
+        <Divider text="or" />
+
         <Form {...form}>
           <form action="" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex gap-5 [&>*]:w-[50%]">
