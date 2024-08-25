@@ -1,15 +1,24 @@
 import { MiddlewareConfig, NextRequest } from "next/server";
 import { stackServerApp } from "./stack";
-import { authRoutes } from "./routes";
+import { authRoutes, protectedRoutes } from "./routes";
 
 export async function middleware(req: NextRequest) {
   const isAuthRoute = authRoutes.includes(req.nextUrl.pathname as `/${string}`);
+  const isProtectedRoute = protectedRoutes.includes(
+    req.nextUrl.pathname as `/${string}`
+  );
   const isLoggedIn = await stackServerApp.getUser();
 
   if (isLoggedIn) {
     if (isAuthRoute) {
       return Response.redirect(new URL("/", req.nextUrl));
     }
+
+    return;
+  }
+
+  if (isProtectedRoute) {
+    return Response.redirect(new URL("/login", req.nextUrl));
   }
 }
 
