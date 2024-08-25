@@ -9,13 +9,11 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useUser } from "@stackframe/stack";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
 
 export default function AvatarDropdownMenu({
-  size,
+  children,
 }: {
-  size?: `${number}px` | `${number}rem`;
+  children: React.ReactNode;
 }) {
   const user = useUser({ or: "redirect" });
 
@@ -25,19 +23,7 @@ export default function AvatarDropdownMenu({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <div
-          className={cn(
-            "bg-gradient-to-b from-blue-400 to-purple-400 rounded-[50%] relative overflow-hidden",
-            !size && "size-10"
-          )}
-          style={{ width: size, height: size }}
-        >
-          {user.profileImageUrl && (
-            <Image src={user.profileImageUrl} alt="profile-picture" fill />
-          )}
-        </div>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="w-[10rem]">
         <DropdownMenuItem className="gap-3">
           <User2 size={19} /> Profile

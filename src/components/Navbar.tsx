@@ -9,6 +9,7 @@ import hamburgerIcon from "../assets/burger-list-menu-com.svg";
 import { createPortal } from "react-dom";
 import { useUser } from "@stackframe/stack";
 import AvatarDropdownMenu from "./AvatarDropdownMenu";
+import Avatar from "./Avatar";
 
 const links = ["Home", "Pricing", "Features", "About", "Contact"];
 
@@ -42,7 +43,9 @@ export default function Navbar() {
       </ul>
 
       {user ? (
-        <AvatarDropdownMenu />
+        <AvatarDropdownMenu>
+          <Avatar className="size-12" />
+        </AvatarDropdownMenu>
       ) : (
         <div className="gap-4 flex">
           <Link href={"/login"}>
