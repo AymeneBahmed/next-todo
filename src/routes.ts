@@ -3,3 +3,5 @@ export const authRoutes: `/${string}`[] = [
   "/signup",
   "/email-verification",
 ];
+
+export const protectedRoutes: `/${string}`[] = ["/dashboard"];
