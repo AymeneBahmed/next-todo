@@ -1,8 +1,7 @@
 "use server";
 
+import { db } from "@/db";
 import { getUserByEmail } from "@/db/users";
-import { createStackUser } from "@/lib/auth";
-import { db } from "@/lib/db";
 import { LoginSchema, SignupSchema } from "@/lib/schemas";
 import { z } from "zod";
 
@@ -21,15 +20,7 @@ export async function signup(values: z.infer<typeof SignupSchema>) {
       return { error: "User already exists!" };
     }
 
-    await db.user.create({
-      data: {
-        id: (await createStackUser(data.email, data.password)).user_id,
-        email: data.email,
-        firstName: data.firstName,
-        username: data.username,
-        lastName: !data.lastName ? null : data.lastName,
-      },
-    });
+    // TODO: Reimplement
 
     return { success: "Confirmation email sent!" };
   } catch (e) {
