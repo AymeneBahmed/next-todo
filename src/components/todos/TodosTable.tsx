@@ -19,7 +19,7 @@ import {
 } from "../ui/table";
 import { Todo } from "@prisma/client";
 import { cn } from "@/lib/utils";
-import { CSSProperties, useMemo, useState } from "react";
+import { CSSProperties, useEffect, useMemo, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -79,7 +79,7 @@ export default function TodosTable({ columns, data }: TodosTableProps) {
           <VisibleColumnsButton todosTable={todosTable} />
         </div>
         <div className="rounded-md border">
-          <Table>
+          <Table className="bg-white">
             <TableHeader className="bg-white">
               {todosTable.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
@@ -129,6 +129,11 @@ function TodoDraggableRow({ row }: { row: Row<Todo> }) {
   const { setNodeRef, transform, transition, isDragging } = useSortable({
     id: row.original.id,
   });
+
+  if (transform && isDragging) {
+    transform.scaleX = 1.01;
+    transform.scaleY = 1.01;
+  }
 
   const style: CSSProperties = {
     zIndex: isDragging ? 1 : 0,
