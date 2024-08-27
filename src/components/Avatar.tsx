@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useUser } from "@stackframe/stack";
 import Image from "next/image";
 
-export default async function Avatar({ className }: { className?: string }) {
+export default function Avatar({ className }: { className?: string }) {
   const user = useUser({ or: "redirect" });
 
   return (
