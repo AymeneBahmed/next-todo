@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
+import LayoutProvider from "@/components/LayoutProvider";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -19,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`h-[100dvh] ${inter.className}`}>
         <ThemeProvider attribute="class" defaultTheme="light">
-          {children}
+          <LayoutProvider>{children}</LayoutProvider>
         </ThemeProvider>
       </body>
     </html>
