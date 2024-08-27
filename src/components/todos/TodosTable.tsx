@@ -120,7 +120,6 @@ export default function TodosTable({ columns, data }: TodosTableProps) {
           </Table>
         </div>
       </div>
-      <pre>{JSON.stringify(todosData, null, 2)}</pre>
     </DndContext>
   );
 }
