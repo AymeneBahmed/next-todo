@@ -19,3 +19,10 @@ export const LoginSchema = z.object({
   email: z.string().email({ message: "Email is required" }),
   password: z.string().min(1, { message: "Password is required" }),
 });
+
+export const NewTodoSchema = z.object({
+  todo: z.string().min(1, { message: "Please, fill the input" }),
+  priority: z.enum(["low", "medium", "high"], {
+    required_error: "Please select priority",
+  }),
+});
