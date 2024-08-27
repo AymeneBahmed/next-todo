@@ -1,26 +1,5 @@
-import { MiddlewareConfig, NextRequest } from "next/server";
-import { authRoutes, protectedRoutes } from "./routes";
-
-export async function middleware(req: NextRequest) {
-  const isAuthRoute = authRoutes.includes(req.nextUrl.pathname as `/${string}`);
-  const isProtectedRoute = protectedRoutes.includes(
-    req.nextUrl.pathname as `/${string}`
-  );
-  // TODO: Reimplement
-  const isLoggedIn = false;
-
-  if (isLoggedIn) {
-    if (isAuthRoute) {
-      return Response.redirect(new URL("/", req.nextUrl));
-    }
-
-    return;
-  }
-
-  if (isProtectedRoute) {
-    return Response.redirect(new URL("/login", req.nextUrl));
-  }
-}
+import { MiddlewareConfig } from "next/server";
+export { auth as middleware } from "@/lib/auth";
 
 export const config: MiddlewareConfig = {
   matcher: [
