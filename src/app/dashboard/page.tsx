@@ -1,4 +1,5 @@
 import { todosTableColumns } from "@/components/todos/columns";
+import NewTodoInput from "@/components/todos/NewTodoInput";
 import TodosTable from "@/components/todos/TodosTable";
 import { Todo } from "@prisma/client";
 
@@ -61,6 +62,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex size-full bg-gradient-to-b from-teal-400 to-blue-500 ">
       <div className="container mx-auto py-10">
+        <NewTodoInput />
         <TodosTable columns={todosTableColumns} data={todos} />
       </div>
     </div>
