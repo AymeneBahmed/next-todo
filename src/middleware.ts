@@ -1,5 +1,4 @@
 import { MiddlewareConfig, NextRequest } from "next/server";
-import { stackServerApp } from "./stack";
 import { authRoutes, protectedRoutes } from "./routes";
 
 export async function middleware(req: NextRequest) {
@@ -7,7 +6,8 @@ export async function middleware(req: NextRequest) {
   const isProtectedRoute = protectedRoutes.includes(
     req.nextUrl.pathname as `/${string}`
   );
-  const isLoggedIn = await stackServerApp.getUser();
+  // TODO: Reimplement
+  const isLoggedIn = false;
 
   if (isLoggedIn) {
     if (isAuthRoute) {

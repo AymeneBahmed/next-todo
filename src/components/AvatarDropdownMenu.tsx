@@ -8,17 +8,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useUser } from "@stackframe/stack";
 
 export default function AvatarDropdownMenu({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = useUser({ or: "redirect" });
-
   async function logout() {
-    await user.signOut();
+    // TODO
   }
 
   return (

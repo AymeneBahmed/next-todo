@@ -2,11 +2,9 @@ import manSmilingImage from "@/assets/man-smiling.webp";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { stackServerApp } from "@/stack";
 
 export default async function HeroSection() {
-  const user = await stackServerApp.getUser();
-
+  // TODO: Reimplement
   return (
     <div className="h-full flex items-center justify-around flex-wrap relative">
       <div className="w-[40rem] space-y-[30px]">
@@ -26,7 +24,8 @@ export default async function HeroSection() {
           and Todo helps you to keep it simple.
         </p>
         <Button className="rounded-full text-[20px] w-[180px] h-[51px]" asChild>
-          <Link href={user ? "/dashboard" : "/signup"}>Get Started</Link>
+          {/* <Link href={user ? "/dashboard" : "/signup"}>Get Started</Link> */}
+          <Link href={"/signup"}>Get Started</Link>
         </Button>
       </div>
 

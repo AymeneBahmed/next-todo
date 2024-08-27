@@ -4,7 +4,6 @@ import { getUserByEmail } from "@/db/users";
 import { createStackUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { LoginSchema, SignupSchema } from "@/lib/schemas";
-import { stackServerApp } from "@/stack";
 import { z } from "zod";
 
 export async function signup(values: z.infer<typeof SignupSchema>) {
@@ -49,21 +48,8 @@ export async function verifyEmail(code: string): Promise<
     }
   | { success: "Email verified successfully!" }
 > {
-  const verificationError = await stackServerApp.verifyEmail(code);
-
-  if (verificationError) {
-    if (verificationError.errorCode === "VERIFICATION_CODE_NOT_FOUND") {
-      return { error: "Verification code not found!" };
-    }
-
-    if (verificationError.errorCode === "VERIFICATION_CODE_ALREADY_USED") {
-      return { error: "Account already verified!" };
-    }
-
-    return { error: "Something went wrong!" };
-  }
-
-  return { success: "Email verified successfully!" };
+  // TODO
+  throw new Error("Unimplemented method");
 }
 
 export async function login(values: z.infer<typeof LoginSchema>) {
@@ -80,16 +66,9 @@ export async function login(values: z.infer<typeof LoginSchema>) {
     if (!existingUser) {
       return { error: "User does not exist!" };
     }
+
+    // TODO: implemenet login
   } catch {
     return { error: "Somethgin went wrong!" };
-  }
-
-  const error = await stackServerApp.signInWithCredential({
-    email: values.email,
-    password: values.password,
-  });
-
-  if (error) {
-    return { error: "Something went wrong!" };
   }
 }

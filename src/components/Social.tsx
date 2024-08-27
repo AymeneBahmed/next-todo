@@ -1,13 +1,8 @@
-import { useStackApp } from "@stackframe/stack";
 import { Button } from "./ui/button";
 import { FcGoogle } from "react-icons/fc";
 
 export default function Social({ disabled }: { disabled: boolean }) {
-  const app = useStackApp();
-
-  async function loginWithGoogle() {
-    await app.signInWithOAuth("google");
-  }
+  async function loginWithGoogle() {}
 
   return (
     <Button

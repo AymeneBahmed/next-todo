@@ -1,12 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useUser } from "@stackframe/stack";
 import Image from "next/image";
 
 export default function Avatar({ className }: { className?: string }) {
-  const user = useUser({ or: "redirect" });
-
+  // TODO: implement
   return (
     <div
       className={cn(
@@ -14,9 +12,7 @@ export default function Avatar({ className }: { className?: string }) {
         className
       )}
     >
-      {user.profileImageUrl && (
-        <Image src={user.profileImageUrl} alt="profile-picture" fill />
-      )}
+      <Image src={""} alt="profile-picture" fill />
     </div>
   );
 }
