@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { db } from ".";
 
 export async function getUserByEmail(email: string) {
   try {
