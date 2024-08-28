@@ -1,11 +1,24 @@
 import authConfig from "@/lib/auth.config";
 import { MiddlewareConfig } from "next/server";
 import NextAuth from "next-auth";
+import { protectedRoutes } from "./routes";
 
 const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
-  
+  const isLoggedIn = !!req.auth;
+
+  const isProtectedRoute = protectedRoutes.includes(
+    req.nextUrl.pathname as `/${string}`
+  );
+
+  if (!isLoggedIn) {
+    if (isProtectedRoute) {
+      return Response.redirect(new URL("/signup", req.nextUrl));
+    }
+
+    return;
+  }
 });
 
 export const config: MiddlewareConfig = {
