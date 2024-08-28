@@ -1,7 +1,7 @@
 import authConfig from "@/lib/auth.config";
 import { MiddlewareConfig } from "next/server";
 import NextAuth from "next-auth";
-import { protectedRoutes } from "./routes";
+import { authRoutes, protectedRoutes } from "./routes";
 
 const { auth } = NextAuth(authConfig);
 
@@ -11,6 +11,7 @@ export default auth((req) => {
   const isProtectedRoute = protectedRoutes.includes(
     req.nextUrl.pathname as `/${string}`
   );
+  const isAuthRoute = authRoutes.includes(req.nextUrl.pathname as `/${string}`);
 
   if (!isLoggedIn) {
     if (isProtectedRoute) {
@@ -19,6 +20,12 @@ export default auth((req) => {
 
     return;
   }
+
+  if (isAuthRoute) {
+    return Response.redirect(new URL("/", req.nextUrl));
+  }
+
+  return;
 });
 
 export const config: MiddlewareConfig = {
