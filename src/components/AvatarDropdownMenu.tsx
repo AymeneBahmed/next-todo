@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { signOut } from "next-auth/react";
 
 export default function AvatarDropdownMenu({
   children,
@@ -15,7 +16,7 @@ export default function AvatarDropdownMenu({
   children: React.ReactNode;
 }) {
   async function logout() {
-    // TODO
+    await signOut({ callbackUrl: "/" });
   }
 
   return (
