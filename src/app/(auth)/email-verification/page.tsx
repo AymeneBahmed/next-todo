@@ -19,20 +19,20 @@ import { PuffLoader } from "react-spinners";
 
 export default function EmailVerificationPage() {
   const searchParams = useSearchParams();
-  const code = searchParams.get("code");
+  const token = searchParams.get("token");
   const [error, setError] = useState<string | null>();
   const [success, setSuccess] = useState<string | null>();
 
   useEffect(() => {
     (async () => {
-      if (!code) {
-        setError("Missing code");
+      if (!token) {
+        setError("Missing verification token");
         setSuccess(null);
 
         return;
       }
 
-      const verificationState = await verifyEmail(code);
+      const verificationState = await verifyEmail(token);
 
       if ("error" in verificationState) {
         setError(verificationState.error);
@@ -42,7 +42,7 @@ export default function EmailVerificationPage() {
         setError(null);
       }
     })();
-  }, [code]);
+  }, [token]);
 
   return (
     <Card className="w-[24rem]">
