@@ -1,10 +1,12 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 export default function Avatar({ className }: { className?: string }) {
-  // TODO: implement
+  const session = useSession();
+
   return (
     <div
       className={cn(
@@ -12,7 +14,9 @@ export default function Avatar({ className }: { className?: string }) {
         className
       )}
     >
-      <Image src={""} alt="profile-picture" fill />
+      {session.data?.user?.image && (
+        <Image src={session.data.user.image} alt="profile-picture" fill />
+      )}
     </div>
   );
 }
