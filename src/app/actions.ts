@@ -28,7 +28,7 @@ export async function signup(values: z.infer<typeof SignupSchema>) {
     await db.user.create({
       data: {
         email: data.email,
-        name: data.firstName,
+        name: `${data.firstName} ${data.lastName || ""}`,
         password: hashSync(data.password),
       },
     });
@@ -39,7 +39,7 @@ export async function signup(values: z.infer<typeof SignupSchema>) {
     );
 
     return { success: "Confirmation email sent!" };
-  } catch (e) {
+  } catch {
     return { error: "Something went wrong! Please, try again." };
   }
 }
