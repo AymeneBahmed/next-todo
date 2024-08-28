@@ -2,7 +2,10 @@
 
 import { db } from "@/db";
 import { getUserByEmail } from "@/db/users";
+import { sendEmailVerificationMail } from "@/lib/mails";
 import { LoginSchema, SignupSchema } from "@/lib/schemas";
+import { generateVerificationToken } from "@/lib/tokens";
+import { hashSync } from "bcryptjs";
 import { z } from "zod";
 
 export async function signup(values: z.infer<typeof SignupSchema>) {
@@ -20,12 +23,21 @@ export async function signup(values: z.infer<typeof SignupSchema>) {
       return { error: "User already exists!" };
     }
 
-    // TODO: Reimplement
+    await db.user.create({
+      data: {
+        email: data.email,
+        name: data.firstName,
+        password: hashSync(data.password),
+      },
+    });
+
+    sendEmailVerificationMail(
+      data.email,
+      (await generateVerificationToken(data.email)).token
+    );
 
     return { success: "Confirmation email sent!" };
   } catch (e) {
-    console.log(e);
-
     return { error: "Something went wrong! Please, try again." };
   }
 }
