@@ -85,6 +85,8 @@ export async function verifyEmail(token: string) {
 }
 
 export async function login(values: z.infer<typeof LoginSchema>) {
+  let data;
+
   try {
     const validatedFields = LoginSchema.safeParse(values);
 
@@ -92,7 +94,8 @@ export async function login(values: z.infer<typeof LoginSchema>) {
       return { error: "Invalid fields" };
     }
 
-    const data = validatedFields.data;
+    data = validatedFields.data;
+
     const existingUser = await getUserByEmail(data.email);
 
     if (!existingUser || !existingUser.password) {
@@ -107,13 +110,17 @@ export async function login(values: z.infer<typeof LoginSchema>) {
 
       return { success: "Confirmation email sent!" };
     }
+  } catch {
+    return { error: "Somethgin went wrong! Please try again." };
+  }
 
+  try {
     await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirectTo: "/dashboard",
     });
-  } catch {
-    return { error: "Somethgin went wrong!" };
+  } catch (error) {
+    throw error;
   }
 }
