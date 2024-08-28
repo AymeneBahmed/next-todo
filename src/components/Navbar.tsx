@@ -7,10 +7,15 @@ import { Button } from "./ui/button";
 import { PenBox } from "lucide-react";
 import hamburgerIcon from "../assets/burger-list-menu-com.svg";
 import { createPortal } from "react-dom";
+import { useSession } from "next-auth/react";
+import AvatarDropdownMenu from "./AvatarDropdownMenu";
+import Avatar from "./Avatar";
 
 const links = ["Home", "Pricing", "Features", "About", "Contact"];
 
 export default function Navbar() {
+  const session = useSession();
+
   return (
     <nav className="flex justify-between w-[80%] mt-4 p-3 rounded-xl max-[1050px]:w-[90%] fixed z-[99999] bg-white/80 backdrop-blur-md left-1/2 -translate-x-1/2">
       <HamburgerMenu />
@@ -37,25 +42,25 @@ export default function Navbar() {
         ))}
       </ul>
 
-      {/* {user ? (
+      {session.data?.user ? (
         <AvatarDropdownMenu>
           <Avatar className="size-12" />
         </AvatarDropdownMenu>
-      ) :  */}
-
-      <div className="gap-4 flex">
-        <Link href={"/login"}>
-          <Button
-            variant="outline"
-            className="border-primary text-primary hover:bg-primary/5 hover:text-primary"
-          >
-            Login
-          </Button>
-        </Link>
-        <Link href={"/signup"}>
-          <Button>Sign Up</Button>
-        </Link>
-      </div>
+      ) : (
+        <div className="gap-4 flex">
+          <Link href={"/login"}>
+            <Button
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary/5 hover:text-primary"
+            >
+              Login
+            </Button>
+          </Link>
+          <Link href={"/signup"}>
+            <Button>Sign Up</Button>
+          </Link>
+        </div>
+      )}
     </nav>
   );
 }
