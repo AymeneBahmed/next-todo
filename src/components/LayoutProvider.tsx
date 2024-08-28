@@ -3,6 +3,7 @@
 import { authRoutes } from "@/routes";
 import Navbar from "./Navbar";
 import { usePathname } from "next/navigation";
+import { SessionProvider } from "next-auth/react";
 
 export default function LayoutProvider({
   children,
@@ -14,8 +15,10 @@ export default function LayoutProvider({
 
   return (
     <>
-      {!excludedRoutes.includes(pathname as `/${string}`) && <Navbar />}
-      {children}
+      <SessionProvider>
+        {!excludedRoutes.includes(pathname as `/${string}`) && <Navbar />}
+        {children}
+      </SessionProvider>
     </>
   );
 }
