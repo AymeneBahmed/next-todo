@@ -113,23 +113,6 @@ export default function SignupForm() {
             </div>
             <FormField
               control={form.control}
-              name="username"
-              render={({ field, fieldState }) => (
-                <FormItem className="mt-5">
-                  <FormLabel>Username</FormLabel>
-                  <FormControl
-                    className={`bg-gray-100 ${
-                      fieldState.invalid && "border-red-400 !ring-red-600"
-                    }`}
-                  >
-                    <Input placeholder="Enter your username" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="email"
               render={({ field, fieldState }) => (
                 <FormItem className="mt-5">
