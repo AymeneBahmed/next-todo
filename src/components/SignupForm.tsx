@@ -24,7 +24,7 @@ import { Checkbox } from "./ui/checkbox";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { SignupSchema } from "@/lib/schemas";
-import { signup } from "@/app/actions/auth";
+import { signup } from "@/actions/auth";
 import FormError from "./FormError";
 import FormSuccess from "./FormSuccess";
 import { useState, useTransition } from "react";

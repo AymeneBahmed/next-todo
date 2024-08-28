@@ -18,7 +18,7 @@ import {
 import { NewTodoSchema } from "@/lib/schemas";
 import { useToast } from "../ui/use-toast";
 import { AlertCircle } from "lucide-react";
-import { createTodo } from "@/app/actions/todo";
+import { createTodo } from "@/actions/todo";
 
 export default function NewTodoInput() {
   const form = useForm<z.infer<typeof NewTodoSchema>>({

@@ -22,7 +22,7 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { LoginSchema } from "@/lib/schemas";
-import { login } from "@/app/actions/auth";
+import { login } from "@/actions/auth";
 import FormError from "./FormError";
 import { useState, useTransition } from "react";
 import Link from "next/link";
