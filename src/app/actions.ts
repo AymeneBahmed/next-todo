@@ -3,6 +3,7 @@
 import { db } from "@/db";
 import { getUserByEmail } from "@/db/users";
 import { getVerificationTokenByToken } from "@/db/verification-tokens";
+import { signIn } from "@/lib/auth";
 import { sendEmailVerificationMail } from "@/lib/mails";
 import { LoginSchema, SignupSchema } from "@/lib/schemas";
 import { generateVerificationToken } from "@/lib/tokens";
@@ -94,11 +95,24 @@ export async function login(values: z.infer<typeof LoginSchema>) {
     const data = validatedFields.data;
     const existingUser = await getUserByEmail(data.email);
 
-    if (!existingUser) {
-      return { error: "User does not exist!" };
+    if (!existingUser || !existingUser.password) {
+      return { error: "Incorrect email or password!" };
     }
 
-    // TODO: implemenet login
+    if (!existingUser.emailVerified) {
+      sendEmailVerificationMail(
+        data.email,
+        (await generateVerificationToken(data.email)).token
+      );
+
+      return { success: "Confirmation email sent!" };
+    }
+
+    await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirectTo: "/dashboard",
+    });
   } catch {
     return { error: "Somethgin went wrong!" };
   }
