@@ -32,7 +32,7 @@ model Todo {
   id           Int      @id @default(autoincrement())
   title        String
   description  String?
-  creationDate DateTime
+  creationDate DateTime @default(now())
   priority     Priority
   userId       String
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
