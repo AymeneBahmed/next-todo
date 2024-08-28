@@ -2,6 +2,7 @@
 
 import { db } from "@/db";
 import { getUserByEmail } from "@/db/users";
+import { getVerificationTokenByToken } from "@/db/verification-tokens";
 import { sendEmailVerificationMail } from "@/lib/mails";
 import { LoginSchema, SignupSchema } from "@/lib/schemas";
 import { generateVerificationToken } from "@/lib/tokens";
@@ -42,17 +43,44 @@ export async function signup(values: z.infer<typeof SignupSchema>) {
   }
 }
 
-export async function verifyEmail(code: string): Promise<
-  | {
-      error:
-        | "Verification code not found!"
-        | "Account already verified!"
-        | "Something went wrong!";
+export async function verifyEmail(token: string) {
+  try {
+    const existingVerificationToken = await getVerificationTokenByToken(token);
+
+    if (!existingVerificationToken) {
+      return {
+        error: "Verification token does not exist!",
+      };
     }
-  | { success: "Email verified successfully!" }
-> {
-  // TODO
-  throw new Error("Unimplemented method");
+
+    if (new Date() > new Date(existingVerificationToken.expiresAt)) {
+      return { error: "Verification token has expired!" };
+    }
+
+    const existingUser = await getUserByEmail(existingVerificationToken.email);
+
+    if (!existingUser) {
+      return { error: "Email does not exist!" };
+    }
+
+    await db.user.update({
+      where: {
+        id: existingUser.id,
+      },
+      data: {
+        emailVerified: new Date(),
+      },
+    });
+
+    await db.verificationToken.delete({ where: { token } });
+
+    return { success: "Email confirmed successfully!" };
+  } catch {
+    return {
+      error:
+        "Something went wrong! Please login again to get a new verification email.",
+    };
+  }
 }
 
 export async function login(values: z.infer<typeof LoginSchema>) {
