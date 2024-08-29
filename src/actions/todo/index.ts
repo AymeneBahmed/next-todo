@@ -12,13 +12,13 @@ export async function createTodo(values: z.infer<typeof NewTodoSchema>) {
     const session = await auth();
 
     if (!session?.user?.email) {
-      throw Error;
+      throw new Error("User not found");
     }
 
     const user = await getUserByEmail(session.user.email);
 
     if (!user) {
-      throw Error;
+      throw new Error("User not found");
     }
 
     const validatedFields = NewTodoSchema.safeParse(values);
@@ -38,6 +38,7 @@ export async function createTodo(values: z.infer<typeof NewTodoSchema>) {
           create: {
             title: todo,
             priority: priority.toUpperCase() as Priority,
+            order: (await db.todo.count()) + 1,
           },
         },
       },
