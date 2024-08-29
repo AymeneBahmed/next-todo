@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { getUserByEmail } from "@/db/users";
 import { auth } from "@/lib/auth";
 import { NewTodoSchema } from "@/lib/schemas";
-import { Priority } from "@prisma/client";
+import { Priority, Todo } from "@prisma/client";
 import { z } from "zod";
 
 export async function createTodo(values: z.infer<typeof NewTodoSchema>) {
@@ -48,4 +48,15 @@ export async function createTodo(values: z.infer<typeof NewTodoSchema>) {
   } catch {
     return { error: "Something went wrong! Please try again." };
   }
+}
+
+export async function updateTodos(newData: Todo[]) {
+  await Promise.all(
+    newData.map((todo) =>
+      db.todo.update({
+        where: { id: todo.id },
+        data: todo,
+      })
+    )
+  );
 }
