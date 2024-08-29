@@ -27,7 +27,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { Menu } from "lucide-react";
+import { Menu, Trash2 } from "lucide-react";
 import {
   arrayMove,
   SortableContext,
@@ -38,7 +38,8 @@ import { CSS } from "@dnd-kit/utilities";
 import { DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import useSWR from "swr";
-import { updateTodos } from "@/actions/todo";
+import { deleteTodos, updateTodos } from "@/actions/todo";
+import { useNotification } from "@/hooks/useNotification";
 
 interface TodosTableProps {
   columns: ColumnDef<Todo>[];
@@ -50,7 +51,6 @@ async function fetcher(...args: Parameters<typeof fetch>) {
 
 export default function TodosTable({ columns }: TodosTableProps) {
   const { data: todosData, mutate } = useSWR<Todo[]>("/api/todo", fetcher);
-
   const dataIds = useMemo<UniqueIdentifier[]>(
     () => (todosData ?? []).map((todo) => todo.id),
     [todosData]
@@ -64,6 +64,7 @@ export default function TodosTable({ columns }: TodosTableProps) {
     getRowId: (row) => row.id.toString(),
     state: { columnVisibility },
   });
+  const notification = useNotification();
 
   async function handleDragEnd(e: DragEndEvent) {
     const { active, over } = e;
@@ -85,7 +86,39 @@ export default function TodosTable({ columns }: TodosTableProps) {
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
       <div className="space-y-2">
-        <div className="flex">
+        <div className="flex gap-3">
+          <form
+            className="ml-auto"
+            onSubmit={async (e) => {
+              e.preventDefault();
+
+              try {
+                await deleteTodos(
+                  todosTable
+                    .getSelectedRowModel()
+                    .rows.map((row) => row.original)
+                );
+                await updateTodos(
+                  todosTable
+                    .getCoreRowModel()
+                    .rows.filter((row) => !row.getIsSelected())
+                    .map((row) => row.original)
+                    .map((todo, i) => ({ ...todo, order: i + 1 }))
+                );
+                notification.show({
+                  message: "Deleted todos successfully!",
+                  state: "success",
+                });
+              } catch {
+                notification.show({
+                  message: "Failed to delete todos!",
+                  state: "error",
+                });
+              }
+            }}
+          >
+            <DeleteButton todosTable={todosTable} />
+          </form>
           <VisibleColumnsButton todosTable={todosTable} />
         </div>
         <div className="rounded-md border">
@@ -180,7 +213,7 @@ function VisibleColumnsButton({ todosTable }: { todosTable: TableType<Todo> }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="ml-auto gap-2 bg-white" variant="outline">
+        <Button className="gap-2 bg-white" variant="outline">
           <Menu size={20} />
           columns
         </Button>
@@ -200,5 +233,29 @@ function VisibleColumnsButton({ todosTable }: { todosTable: TableType<Todo> }) {
           ))}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function DeleteButton({
+  todosTable,
+  className,
+}: {
+  todosTable: TableType<Todo>;
+  className?: string;
+}) {
+  return (
+    <Button
+      className={cn(className)}
+      variant="destructive"
+      size="icon"
+      aria-label="delete todos"
+      title="Delete todos"
+      disabled={
+        !todosTable.getIsAllRowsSelected() &&
+        !todosTable.getIsSomeRowsSelected()
+      }
+    >
+      <Trash2 />
+    </Button>
   );
 }
