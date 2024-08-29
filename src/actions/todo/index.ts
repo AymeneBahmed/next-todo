@@ -5,6 +5,7 @@ import { getUserByEmail } from "@/db/users";
 import { auth } from "@/lib/auth";
 import { NewTodoSchema } from "@/lib/schemas";
 import { Priority, Todo } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 export async function createTodo(values: z.infer<typeof NewTodoSchema>) {
@@ -59,4 +60,12 @@ export async function updateTodos(newData: Todo[]) {
       })
     )
   );
+}
+
+export async function deleteTodos(data: Todo[]) {
+  await Promise.all(
+    data.map((todo) => db.todo.delete({ where: { id: todo.id } }))
+  );
+
+  revalidatePath("/dashboard", "page");
 }
