@@ -11,7 +11,7 @@ export function useNotification() {
 
   return {
     show({ message, state }: NotificationProps) {
-      if (state === "neutral") {
+      if (state === "error") {
         toast({
           description: (
             <div className="flex items-center gap-3">
