@@ -32,7 +32,6 @@ model Todo {
   id           String   @id @default(cuid())
   order        Int
   title        String
-  description  String?
   creationDate DateTime @default(now())
   priority     Priority
   userId       String

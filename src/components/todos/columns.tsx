@@ -34,7 +34,6 @@ export const todosTableColumns: ColumnDef<Todo>[] = [
     enableHiding: false,
   },
   { accessorKey: "title", header: "Title" },
-  { accessorKey: "description", header: "Description" },
   { accessorKey: "priority", header: "Priority" },
   { accessorKey: "creationDate", header: "Creation Date" },
   {
