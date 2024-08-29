@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { CheckCircle, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState, useTransition } from "react";
 import {
   Select,
@@ -16,9 +16,8 @@ import {
   SelectValue,
 } from "../ui/select";
 import { NewTodoSchema } from "@/lib/schemas";
-import { useToast } from "../ui/use-toast";
-import { AlertCircle } from "lucide-react";
 import { createTodo } from "@/actions/todo";
+import { useNotification } from "@/hooks/useNotification";
 
 export default function NewTodoInput() {
   const form = useForm<z.infer<typeof NewTodoSchema>>({
@@ -29,45 +28,21 @@ export default function NewTodoInput() {
     resolver: zodResolver(NewTodoSchema),
   });
   const [isInputFocused, setIsInputFocused] = useState(false);
-  const [error, setError] = useState<string>();
-  const [success, setSuccess] = useState<string>();
   const [isPending, startTransition] = useTransition();
-  const { toast } = useToast();
+  const notification = useNotification();
 
   async function onSubmit(values: z.infer<typeof NewTodoSchema>) {
     startTransition(async () => {
       const creationState = await createTodo(values);
 
       if (creationState.error) {
-        setError(creationState.error);
-        setSuccess(undefined);
-
-        toast({
-          description: (
-            <div className="flex items-center gap-3">
-              <AlertCircle />
-              <p>{creationState.error}</p>
-            </div>
-          ),
-          variant: "destructive",
-        });
+        notification.show({ message: creationState.error, state: "error" });
 
         return;
       }
 
       if (creationState.success) {
-        setSuccess(creationState.success);
-        setError(undefined);
-
-        toast({
-          description: (
-            <div className="flex items-center gap-3">
-              <CheckCircle />
-              <p>{creationState.success}</p>
-            </div>
-          ),
-          variant: "success",
-        });
+        notification.show({ message: creationState.success, state: "success" });
       }
     });
   }
