@@ -3,7 +3,6 @@ import { auth } from "@/lib/auth";
 
 export async function GET() {
   const session = await auth();
-  console.log(session?.user);
 
   if (!session?.user?.id) {
     return new Response(null, { status: 401 });
