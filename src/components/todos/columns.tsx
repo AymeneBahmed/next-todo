@@ -10,7 +10,18 @@ import { useSortable } from "@dnd-kit/sortable";
 export const todosTableColumns: ColumnDef<Todo>[] = [
   {
     id: "checked",
-    header: "Check",
+    header({ table }) {
+      return (
+        <Checkbox
+          checked={
+            table.getIsAllRowsSelected() ||
+            (table.getIsSomeRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
+          aria-label="Check all todos"
+        />
+      );
+    },
     cell({ row }) {
       return (
         <Checkbox
