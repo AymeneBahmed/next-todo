@@ -37,38 +37,48 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { DndContext, DragEndEvent, UniqueIdentifier } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import useSWR from "swr";
+import { updateTodos } from "@/actions/todo";
 
 interface TodosTableProps {
   columns: ColumnDef<Todo>[];
-  data: Todo[];
 }
 
-export default function TodosTable({ columns, data }: TodosTableProps) {
-  const [todosData, setTodosData] = useState(data);
+async function fetcher(...args: Parameters<typeof fetch>) {
+  return await (await fetch(...args)).json();
+}
+
+export default function TodosTable({ columns }: TodosTableProps) {
+  const { data: todosData, mutate } = useSWR<Todo[]>("/api/todo", fetcher);
+
   const dataIds = useMemo<UniqueIdentifier[]>(
-    () => todosData.map((todo) => todo.id),
+    () => (todosData ?? []).map((todo) => todo.id),
     [todosData]
   );
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const todosTable = useReactTable({
     columns,
-    data: todosData,
+    data: todosData ?? [],
     getCoreRowModel: getCoreRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     getRowId: (row) => row.id.toString(),
     state: { columnVisibility },
   });
 
-  function handleDragEnd(e: DragEndEvent) {
+  async function handleDragEnd(e: DragEndEvent) {
     const { active, over } = e;
 
     if (over && active.id !== over.id) {
-      setTodosData((data) => {
-        const oldIndex = dataIds.indexOf(active.id);
-        const newIndex = dataIds.indexOf(over.id);
+      const oldIndex = dataIds.indexOf(active.id);
+      const newIndex = dataIds.indexOf(over.id);
 
-        return arrayMove(data, oldIndex, newIndex);
-      });
+      const reorderedTodos = arrayMove(todosData ?? [], oldIndex, newIndex).map(
+        (todo, i) => ({ ...todo, order: i + 1 })
+      );
+
+      mutate(reorderedTodos, false);
+
+      await updateTodos(reorderedTodos);
     }
   }
 
