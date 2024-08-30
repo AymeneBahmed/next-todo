@@ -25,8 +25,12 @@ export default function Navbar() {
         className="uppercase text-xl font-bold flex items-center gap-2"
         scroll={false}
       >
-        <PenBox />
-        Todo
+        <Image
+          src="/logo-no-background.svg"
+          alt="logo"
+          width={140}
+          height={140}
+        />
       </Link>
 
       <ul className="gap-10 max-[1050px]:hidden flex items-center">
