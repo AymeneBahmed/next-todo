@@ -2,8 +2,12 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
-import LayoutProvider from "@/components/LayoutProvider";
 import { Toaster } from "@/components/ui/toaster";
+import dynamic from "next/dynamic";
+
+const LayoutProvider = dynamic(() => import("@/components/LayoutProvider"), {
+  ssr: false,
+});
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
