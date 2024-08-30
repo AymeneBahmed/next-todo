@@ -19,7 +19,7 @@ import {
 } from "../ui/table";
 import { Todo } from "@prisma/client";
 import { cn } from "@/lib/utils";
-import { CSSProperties, useMemo, useState } from "react";
+import { CSSProperties, useMemo, useState, useTransition } from "react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -161,38 +161,7 @@ export default function TodosTable() {
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
       <div className="space-y-2">
         <div className="flex gap-3">
-          <form
-            className="ml-auto"
-            onSubmit={async (e) => {
-              e.preventDefault();
-
-              try {
-                await deleteTodos(
-                  todosTable
-                    .getSelectedRowModel()
-                    .rows.map((row) => row.original)
-                );
-                await updateTodos(
-                  todosTable
-                    .getCoreRowModel()
-                    .rows.filter((row) => !row.getIsSelected())
-                    .map((row) => row.original)
-                    .map((todo, i) => ({ ...todo, order: i + 1 }))
-                );
-                notification.show({
-                  message: "Deleted todos successfully!",
-                  state: "success",
-                });
-              } catch {
-                notification.show({
-                  message: "Failed to delete todos!",
-                  state: "error",
-                });
-              }
-            }}
-          >
-            <DeleteButton todosTable={todosTable} />
-          </form>
+          <DeleteButton todosTable={todosTable} />
           <VisibleColumnsButton todosTable={todosTable} />
         </div>
         <div className="rounded-md border">
@@ -329,19 +298,54 @@ function DeleteButton({
   todosTable: TableType<Todo>;
   className?: string;
 }) {
+  const notification = useNotification();
+  const [isPending, starTransition] = useTransition();
+
   return (
-    <Button
-      className={cn(className)}
-      variant="destructive"
-      size="icon"
-      aria-label="delete todos"
-      title="Delete todos"
-      disabled={
-        !todosTable.getIsAllRowsSelected() &&
-        !todosTable.getIsSomeRowsSelected()
-      }
+    <form
+      className="ml-auto"
+      onSubmit={(e) => {
+        e.preventDefault();
+
+        starTransition(async () => {
+          try {
+            await deleteTodos(
+              todosTable.getSelectedRowModel().rows.map((row) => row.original)
+            );
+            await updateTodos(
+              todosTable
+                .getCoreRowModel()
+                .rows.filter((row) => !row.getIsSelected())
+                .map((row) => row.original)
+                .map((todo, i) => ({ ...todo, order: i + 1 }))
+            );
+            notification.show({
+              message: "Deleted todos successfully!",
+              state: "success",
+            });
+          } catch {
+            notification.show({
+              message: "Failed to delete todos!",
+              state: "error",
+            });
+          }
+        });
+      }}
     >
-      <Trash2 />
-    </Button>
+      <Button
+        className={cn(className)}
+        variant="destructive"
+        size="icon"
+        aria-label="delete todos"
+        title="Delete todos"
+        disabled={
+          (!todosTable.getIsAllRowsSelected() &&
+            !todosTable.getIsSomeRowsSelected()) ||
+          isPending
+        }
+      >
+        <Trash2 />
+      </Button>
+    </form>
   );
 }
