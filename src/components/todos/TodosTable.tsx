@@ -19,7 +19,7 @@ import {
 } from "../ui/table";
 import { Todo } from "@prisma/client";
 import { cn } from "@/lib/utils";
-import { CSSProperties, useEffect, useMemo, useState } from "react";
+import { CSSProperties, useMemo, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -40,21 +40,92 @@ import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import useSWR from "swr";
 import { deleteTodos, updateTodos } from "@/actions/todo";
 import { useNotification } from "@/hooks/useNotification";
-
-interface TodosTableProps {
-  columns: ColumnDef<Todo>[];
-}
+import { Checkbox } from "../ui/checkbox";
 
 async function fetcher(...args: Parameters<typeof fetch>) {
   return await (await fetch(...args)).json();
 }
 
-export default function TodosTable({ columns }: TodosTableProps) {
+export default function TodosTable() {
   const { data: todosData, mutate } = useSWR<Todo[]>("/api/todo", fetcher);
   const dataIds = useMemo<UniqueIdentifier[]>(
     () => (todosData ?? []).map((todo) => todo.id),
     [todosData]
   );
+  const columns: ColumnDef<Todo>[] = useMemo(
+    () =>
+      [
+        {
+          id: "checked",
+          header({ table }) {
+            return (
+              <Checkbox
+                checked={
+                  table.getIsAllRowsSelected() ||
+                  (table.getIsSomeRowsSelected() && "indeterminate")
+                }
+                onCheckedChange={(value) =>
+                  table.toggleAllRowsSelected(!!value)
+                }
+                aria-label="Check all todos"
+              />
+            );
+          },
+          cell({ row }) {
+            return (
+              <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => row.toggleSelected(!!value)}
+                aria-label="Check todo"
+              />
+            );
+          },
+          enableHiding: false,
+        },
+        { accessorKey: "title", header: "Title" },
+        { accessorKey: "priority", header: "Priority" },
+        {
+          accessorKey: "creationDate",
+          header: "Creation Date",
+          cell({ row }) {
+            return (
+              <>
+                {new Date(row.original.creationDate).toLocaleDateString(
+                  "en-US",
+                  {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                  }
+                )}
+              </>
+            );
+          },
+        },
+        {
+          id: "drag-handle",
+          header: "Move",
+          cell({ row }) {
+            return (function Cell() {
+              const { attributes, listeners } = useSortable({
+                id: row.original.id,
+              });
+
+              return (
+                <Button {...attributes} {...listeners}>
+                  <Menu size={20} />
+                </Button>
+              );
+            })();
+          },
+        },
+      ] as const,
+    []
+  );
+
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const todosTable = useReactTable({
     columns,
