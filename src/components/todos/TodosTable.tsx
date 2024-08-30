@@ -47,8 +47,6 @@ async function fetcher(...args: Parameters<typeof fetch>) {
 }
 
 export default function TodosTable() {
-  const [showDate, setShowDate] = useState(true);
-  const [showTime, setShowTime] = useState(true);
   const { data: todosData, mutate } = useSWR<Todo[]>("/api/todo", fetcher);
   const dataIds = useMemo<UniqueIdentifier[]>(
     () => (todosData ?? []).map((todo) => todo.id),
@@ -88,59 +86,20 @@ export default function TodosTable() {
         { accessorKey: "priority", header: "Priority" },
         {
           accessorKey: "creationDate",
-          header() {
-            return (
-              <>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="gap-2 p-0">
-                      Creation Date <Settings size={18} />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuCheckboxItem
-                      checked={showDate}
-                      onCheckedChange={setShowDate}
-                      disabled={!showTime}
-                    >
-                      Show date
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                      checked={showTime}
-                      onCheckedChange={setShowTime}
-                      disabled={!showDate}
-                    >
-                      Show time
-                    </DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
-            );
-          },
+          header: "Creation Date",
           cell({ row }) {
             const dateTime = new Date(row.original.creationDate);
 
             return (
               <>
-                {showTime &&
-                  dateTime.toLocaleTimeString("en-US", {
-                    ...(showDate && {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    }),
-                    hour: "numeric",
-                    minute: "numeric",
-                  })}
-                {!showTime &&
-                  showDate &&
-                  dateTime.toLocaleDateString("en-US", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+                {dateTime.toLocaleTimeString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                })}
               </>
             );
           },
@@ -163,7 +122,7 @@ export default function TodosTable() {
           },
         },
       ] as const,
-    [showDate, showTime]
+    []
   );
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const todosTable = useReactTable({
