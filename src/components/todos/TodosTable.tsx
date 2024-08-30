@@ -138,7 +138,6 @@ export default function TodosTable() {
     getRowId: (row) => row.id.toString(),
     state: { columnVisibility },
   });
-  const notification = useNotification();
 
   async function handleDragEnd(e: DragEndEvent) {
     const { active, over } = e;
