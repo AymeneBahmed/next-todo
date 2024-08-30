@@ -35,7 +35,24 @@ export const todosTableColumns: ColumnDef<Todo>[] = [
   },
   { accessorKey: "title", header: "Title" },
   { accessorKey: "priority", header: "Priority" },
-  { accessorKey: "creationDate", header: "Creation Date" },
+  {
+    accessorKey: "creationDate",
+    header: "Creation Date",
+    cell({ row }) {
+      return (
+        <>
+          {new Date(row.original.creationDate).toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          })}
+        </>
+      );
+    },
+  },
   {
     id: "drag-handle",
     header: "Move",
