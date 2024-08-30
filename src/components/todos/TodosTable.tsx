@@ -27,7 +27,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { Menu, Settings, Trash2 } from "lucide-react";
+import { Menu, Trash2 } from "lucide-react";
 import {
   arrayMove,
   SortableContext,
@@ -41,13 +41,18 @@ import useSWR from "swr";
 import { deleteTodos, updateTodos } from "@/actions/todo";
 import { useNotification } from "@/hooks/useNotification";
 import { Checkbox } from "../ui/checkbox";
+import { ClipLoader } from "react-spinners";
 
 async function fetcher(...args: Parameters<typeof fetch>) {
   return await (await fetch(...args)).json();
 }
 
 export default function TodosTable() {
-  const { data: todosData, mutate } = useSWR<Todo[]>("/api/todo", fetcher);
+  const {
+    data: todosData,
+    mutate,
+    isLoading,
+  } = useSWR<Todo[]>("/api/todo", fetcher);
   const dataIds = useMemo<UniqueIdentifier[]>(
     () => (todosData ?? []).map((todo) => todo.id),
     [todosData]
@@ -209,6 +214,14 @@ export default function TodosTable() {
               ))}
             </TableHeader>
             <TableBody>
+              {isLoading && (
+                <TableRow>
+                  <TableCell className="text-center" colSpan={columns.length}>
+                    <ClipLoader speedMultiplier={0.7} />
+                    <div>Loading...</div>
+                  </TableCell>
+                </TableRow>
+              )}
               {todosTable.getRowModel().rows.length ? (
                 <SortableContext
                   items={dataIds}
@@ -219,14 +232,18 @@ export default function TodosTable() {
                   ))}
                 </SortableContext>
               ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No todos.
-                  </TableCell>
-                </TableRow>
+                <>
+                  {!isLoading && (
+                    <TableRow>
+                      <TableCell
+                        colSpan={columns.length}
+                        className="h-24 text-center"
+                      >
+                        No todos.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </>
               )}
             </TableBody>
           </Table>
