@@ -224,7 +224,7 @@ export default function TodosTable() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    No todos.
                   </TableCell>
                 </TableRow>
               )}
