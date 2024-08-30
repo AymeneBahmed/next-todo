@@ -191,7 +191,7 @@ export default function TodosTable() {
           <VisibleColumnsButton todosTable={todosTable} />
         </div>
         <div className="rounded-md border">
-          <Table className="bg-white">
+          <Table className="bg-white overflow-hidden">
             <TableHeader className="bg-white">
               {todosTable.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
