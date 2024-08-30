@@ -2,8 +2,10 @@
 
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   Row,
   Table as TableType,
   useReactTable,
@@ -42,6 +44,7 @@ import { deleteTodos, updateTodos } from "@/actions/todo";
 import { useNotification } from "@/hooks/useNotification";
 import { Checkbox } from "../ui/checkbox";
 import { ClipLoader } from "react-spinners";
+import { Input } from "../ui/input";
 
 async function fetcher(...args: Parameters<typeof fetch>) {
   return await (await fetch(...args)).json();
@@ -130,13 +133,16 @@ export default function TodosTable() {
     []
   );
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const todosTable = useReactTable({
     columns,
     data: todosData ?? [],
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    onColumnFiltersChange: setColumnFilters,
     getRowId: (row) => row.id.toString(),
-    state: { columnVisibility },
+    state: { columnVisibility, columnFilters },
   });
 
   async function handleDragEnd(e: DragEndEvent) {
@@ -161,6 +167,7 @@ export default function TodosTable() {
       <div className="space-y-2">
         <div className="flex gap-3">
           <DeleteButton todosTable={todosTable} />
+          <TodoTitleFilterer todosTable={todosTable} />
           <VisibleColumnsButton todosTable={todosTable} />
         </div>
         <div className="rounded-md border">
@@ -218,6 +225,29 @@ export default function TodosTable() {
         </div>
       </div>
     </DndContext>
+  );
+}
+
+function TodoTitleFilterer({
+  todosTable,
+  className,
+}: {
+  todosTable: TableType<Todo>;
+  className?: string;
+}) {
+  return (
+    <>
+      <Input
+        value={
+          (todosTable.getColumn("title")?.getFilterValue() as string) ?? ""
+        }
+        onChange={(e) =>
+          todosTable.getColumn("title")?.setFilterValue(e.target.value)
+        }
+        placeholder="Filter todo's title..."
+        className={cn("w-[20%]", className)}
+      />
+    </>
   );
 }
 
