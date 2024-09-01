@@ -19,17 +19,26 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Todo } from "@prisma/client";
+import { Priority, Todo } from "@prisma/client";
 import { cn } from "@/lib/utils";
-import { CSSProperties, useMemo, useState, useTransition } from "react";
+import {
+  CSSProperties,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+  useTransition,
+} from "react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { Menu, Trash2 } from "lucide-react";
+import { ChevronDown, Menu, Trash2 } from "lucide-react";
 import {
   arrayMove,
   SortableContext,
@@ -45,6 +54,13 @@ import { useNotification } from "@/hooks/useNotification";
 import { Checkbox } from "../ui/checkbox";
 import { ClipLoader } from "react-spinners";
 import { Input } from "../ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 async function fetcher(...args: Parameters<typeof fetch>) {
   return await (await fetch(...args)).json();
@@ -134,6 +150,11 @@ export default function TodosTable() {
   );
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [visibilePriorities, setVisiblePriorities] = useState<Priority[]>([
+    "LOW",
+    "MEDIUM",
+    "HIGH",
+  ]);
   const todosTable = useReactTable({
     columns,
     data: todosData ?? [],
@@ -165,9 +186,14 @@ export default function TodosTable() {
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
       <div className="space-y-2">
-        <div className="flex gap-3">
+        <div className="flex items-end gap-3">
           <DeleteButton todosTable={todosTable} />
           <TodoTitleFilterer todosTable={todosTable} />
+          <TodoPriorityFilterer
+            todosTable={todosTable}
+            visibilePriorities={visibilePriorities}
+            setVisiblePriorities={setVisiblePriorities}
+          />
           <VisibleColumnsButton todosTable={todosTable} />
         </div>
         <div className="rounded-md border">
@@ -202,9 +228,14 @@ export default function TodosTable() {
                   items={dataIds}
                   strategy={verticalListSortingStrategy}
                 >
-                  {todosTable.getRowModel().rows.map((row) => (
-                    <TodoDraggableRow row={row} key={row.id} />
-                  ))}
+                  {todosTable
+                    .getRowModel()
+                    .rows.filter((row) =>
+                      visibilePriorities.includes(row.getValue("priority"))
+                    )
+                    .map((row) => (
+                      <TodoDraggableRow row={row} key={row.id} />
+                    ))}
                 </SortableContext>
               ) : (
                 <>
@@ -248,6 +279,73 @@ function TodoTitleFilterer({
         className={cn("w-[20%]", className)}
       />
     </>
+  );
+}
+
+function TodoPriorityFilterer({
+  todosTable,
+  visibilePriorities,
+  setVisiblePriorities,
+}: {
+  todosTable: TableType<Todo>;
+  visibilePriorities: Priority[];
+  setVisiblePriorities: Dispatch<SetStateAction<Priority[]>>;
+}) {
+  const priorities = ["LOW", "MEDIUM", "HIGH"] as const;
+
+  return (
+    <div className="flex flex-col relative">
+      <div className="flex *:w-1/3 *:text-center">
+        {visibilePriorities.includes("LOW") && (
+          <div className="text-black rounded-tl bg-emerald-500" title="low">
+            L
+          </div>
+        )}
+        {visibilePriorities.includes("MEDIUM") && (
+          <div className="text-black bg-orange-500" title="medium">
+            M
+          </div>
+        )}
+        {visibilePriorities.includes("HIGH") && (
+          <div className="text-black rounded-tr bg-red-500" title="high">
+            H
+          </div>
+        )}
+      </div>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              "gap-1",
+              visibilePriorities.length !== 0 && "rounded-t-none",
+              [1, 2].includes(visibilePriorities.length) && "rounded-r-md"
+            )}
+          >
+            priority <ChevronDown size={18} />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          {priorities.map((priority) => (
+            <DropdownMenuCheckboxItem
+              key={priority}
+              checked={visibilePriorities.includes(priority)}
+              onCheckedChange={(checked) =>
+                checked
+                  ? setVisiblePriorities([...visibilePriorities, priority])
+                  : setVisiblePriorities(
+                      visibilePriorities.filter(
+                        (visibilePriority) => visibilePriority !== priority
+                      )
+                    )
+              }
+            >
+              {priority}
+            </DropdownMenuCheckboxItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }
 
