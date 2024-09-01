@@ -186,7 +186,7 @@ export default function TodosTable() {
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
       <div className="space-y-2">
-        <div className="flex items-end gap-3">
+        <div className="flex items-end gap-3 relative">
           <DeleteButton todosTable={todosTable} />
           <TodoTitleFilterer todosTable={todosTable} />
           <TodoPriorityFilterer
@@ -197,7 +197,7 @@ export default function TodosTable() {
           <VisibleColumnsButton todosTable={todosTable} />
         </div>
         <div className="rounded-md border">
-          <Table className="bg-white overflow-hidden">
+          <Table className="bg-white overflow-hidden rounded-md">
             <TableHeader className="bg-white">
               {todosTable.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>

@@ -48,7 +48,7 @@ export default function NewTodoInput() {
   }
 
   return (
-    <div className="flex mb-10">
+    <div className="flex mb-10 relative">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
