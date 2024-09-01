@@ -18,6 +18,31 @@ export default function Settings() {
           <SettingsIcon />
         </Button>
       </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <ColorThemeButton />
+      </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function ColorThemeButton() {
+  const { theme, setTheme } = useTheme();
+
+  return (
+    <DropdownMenuItem
+      className="gap-2"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+    >
+      {theme === "dark" && (
+        <>
+          <Moon /> Dark theme
+        </>
+      )}
+      {theme === "light" && (
+        <>
+          <Sun /> Light theme
+        </>
+      )}
+    </DropdownMenuItem>
   );
 }
