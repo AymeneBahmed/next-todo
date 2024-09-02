@@ -405,7 +405,7 @@ function TodoDraggableRow({ row }: { row: Row<Todo> }) {
       key={row.id}
       id={row.id}
       className={cn(
-        "h-14",
+        "h-[73px]",
         row.getValue("priority") === "HIGH" && "bg-red-50 text-red-700",
         row.getValue("priority") === "MEDIUM" && "bg-orange-50 text-orange-700",
         row.getValue("priority") === "LOW" && "bg-emerald-50 text-emerald-700",
