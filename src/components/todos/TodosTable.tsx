@@ -283,7 +283,7 @@ export default function TodosTable() {
                 />
               </>
             ) : (
-              <EditModeButton onClick={() => setEditMode(true)} />
+              <EnterEditModeButton onClick={() => setEditMode(true)} />
             )}
           </div>
           <DeleteButton todosTable={todosTable} />
@@ -576,7 +576,7 @@ function DeleteButton({
   );
 }
 
-function EditModeButton({
+function EnterEditModeButton({
   onClick,
   className,
 }: {
