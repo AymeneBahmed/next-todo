@@ -216,6 +216,7 @@ export default function TodosTable() {
               )}
               {todosTable.getRowModel().rows.length ? (
                 <SortableContext
+                  key={Date.now()}
                   items={dataIds}
                   strategy={verticalListSortingStrategy}
                 >
