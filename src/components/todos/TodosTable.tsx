@@ -229,7 +229,22 @@ export default function TodosTable() {
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
       <div className="space-y-2">
         <div className="flex items-end gap-3 relative">
-          <EditModeButton onClick={() => setEditMode(true)} />
+          <div className="ml-auto gap-3 flex">
+            {editMode ? (
+              <>
+                <ExitEditModeButton onClick={() => setEditMode(false)} />
+                <SaveEditModeButton
+                  onClick={() => {
+                    // TODO: add more logic
+
+                    setEditMode(false);
+                  }}
+                />
+              </>
+            ) : (
+              <EditModeButton onClick={() => setEditMode(true)} />
+            )}
+          </div>
           <DeleteButton todosTable={todosTable} />
           <TodoTitleFilterer todosTable={todosTable} />
           <TodoPriorityFilterer
