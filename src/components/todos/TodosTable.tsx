@@ -283,7 +283,10 @@ export default function TodosTable() {
                 />
               </>
             ) : (
-              <EnterEditModeButton onClick={() => setEditMode(true)} />
+              <EnterEditModeButton
+                onClick={() => setEditMode(true)}
+                disabled={isLoading}
+              />
             )}
           </div>
           <DeleteButton todosTable={todosTable} />
@@ -579,9 +582,11 @@ function DeleteButton({
 function EnterEditModeButton({
   onClick,
   className,
+  disabled,
 }: {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   className?: string;
+  disabled?: boolean;
 }) {
   return (
     <Button
@@ -590,6 +595,7 @@ function EnterEditModeButton({
       size="icon"
       title="edit mode"
       aria-label="Enter edit mode"
+      disabled={disabled}
     >
       <Pencil />
     </Button>
