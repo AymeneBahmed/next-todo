@@ -39,6 +39,7 @@ import {
 import { Button } from "../ui/button";
 import {
   ChevronDown,
+  LogOut,
   Menu,
   Pencil,
   Save,
@@ -555,6 +556,26 @@ function SaveEditModeButton({
       aria-label="Save"
     >
       <Save />
+    </Button>
+  );
+}
+
+function ExitEditModeButton({
+  onClick,
+  className,
+}: {
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
+}) {
+  return (
+    <Button
+      onClick={onClick}
+      className={cn(className)}
+      size="icon"
+      title="exit edit mode"
+      aria-label="Exit edit mode"
+    >
+      <LogOut />
     </Button>
   );
 }
