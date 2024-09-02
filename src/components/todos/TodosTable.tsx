@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 import {
   CSSProperties,
   Dispatch,
+  MouseEventHandler,
   SetStateAction,
   useMemo,
   useState,
@@ -36,7 +37,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { ChevronDown, Menu, Settings, Trash2 } from "lucide-react";
+import { ChevronDown, Menu, Pencil, Settings, Trash2 } from "lucide-react";
 import {
   arrayMove,
   SortableContext,
@@ -69,6 +70,7 @@ export default function TodosTable() {
   );
   const [showDate, setShowDate] = useState(true);
   const [showTime, setShowTime] = useState(true);
+  const [editMode, setEditMode] = useState(false);
   const columns: ColumnDef<Todo>[] = useMemo(
     () =>
       [
@@ -219,6 +221,7 @@ export default function TodosTable() {
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
       <div className="space-y-2">
         <div className="flex items-end gap-3 relative">
+          <EditModeButton onClick={() => setEditMode(true)} />
           <DeleteButton todosTable={todosTable} />
           <TodoTitleFilterer todosTable={todosTable} />
           <TodoPriorityFilterer
@@ -463,7 +466,6 @@ function DeleteButton({
 
   return (
     <form
-      className="ml-auto"
       onSubmit={(e) => {
         e.preventDefault();
 
@@ -507,5 +509,23 @@ function DeleteButton({
         <Trash2 />
       </Button>
     </form>
+  );
+}
+
+function EditModeButton({
+  onClick,
+}: {
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+}) {
+  return (
+    <Button
+      onClick={onClick}
+      className="ml-auto"
+      size="icon"
+      title="edit mode"
+      aria-label="Enter edit mode"
+    >
+      <Pencil />
+    </Button>
   );
 }
