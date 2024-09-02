@@ -79,6 +79,7 @@ export default function TodosTable() {
   const [showDate, setShowDate] = useState(true);
   const [showTime, setShowTime] = useState(true);
   const [editMode, setEditMode] = useState(false);
+  const notification = useNotification();
   const columns: ColumnDef<Todo>[] = useMemo(
     () =>
       [
@@ -109,7 +110,24 @@ export default function TodosTable() {
           },
           enableHiding: false,
         },
-        { accessorKey: "title", header: "Title" },
+        {
+          accessorKey: "title",
+          header: "Title",
+          cell({ row }) {
+            if (editMode) {
+              return (
+                <Input
+                  defaultValue={row.original.title}
+                  onBlur={(e) => {
+                    row.original.title = e.target.value;
+                  }}
+                />
+              );
+            }
+
+            return <>{row.original.title}</>;
+          },
+        },
         { accessorKey: "priority", header: "Priority" },
         {
           accessorKey: "creationDate",
@@ -188,7 +206,7 @@ export default function TodosTable() {
           },
         },
       ] as const,
-    [showDate, showTime]
+    [editMode, showDate, showTime]
   );
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -234,8 +252,20 @@ export default function TodosTable() {
               <>
                 <ExitEditModeButton onClick={() => setEditMode(false)} />
                 <SaveEditModeButton
-                  onClick={() => {
-                    // TODO: add more logic
+                  onClick={async () => {
+                    try {
+                      await updateTodos(todosData ?? []);
+
+                      notification.show({
+                        message: "Updated the table successfully!",
+                        state: "success",
+                      });
+                    } catch {
+                      notification.show({
+                        message: "Something went wrong! Please try again",
+                        state: "error",
+                      });
+                    }
 
                     setEditMode(false);
                   }}
