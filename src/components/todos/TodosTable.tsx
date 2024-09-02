@@ -225,6 +225,7 @@ export default function TodosTable() {
     getRowId: (row) => row.id.toString(),
     state: { columnVisibility, columnFilters },
   });
+  const [isPending, starTransition] = useTransition();
 
   async function handleDragEnd(e: DragEndEvent) {
     const { active, over } = e;
@@ -252,22 +253,25 @@ export default function TodosTable() {
               <>
                 <ExitEditModeButton onClick={() => setEditMode(false)} />
                 <SaveEditModeButton
-                  onClick={async () => {
-                    try {
-                      await updateTodos(todosData ?? []);
+                  disabled={isPending}
+                  onClick={() => {
+                    starTransition(async () => {
+                      try {
+                        await updateTodos(todosData ?? []);
 
-                      notification.show({
-                        message: "Updated the table successfully!",
-                        state: "success",
-                      });
-                    } catch {
-                      notification.show({
-                        message: "Something went wrong! Please try again",
-                        state: "error",
-                      });
-                    }
+                        notification.show({
+                          message: "Updated the table successfully!",
+                          state: "success",
+                        });
+                      } catch {
+                        notification.show({
+                          message: "Something went wrong! Please try again",
+                          state: "error",
+                        });
+                      }
 
-                    setEditMode(false);
+                      setEditMode(false);
+                    });
                   }}
                 />
               </>
@@ -588,9 +592,11 @@ function EditModeButton({
 function SaveEditModeButton({
   onClick,
   className,
+  disabled,
 }: {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   className?: string;
+  disabled?: boolean;
 }) {
   return (
     <Button
@@ -599,6 +605,7 @@ function SaveEditModeButton({
       size="icon"
       title="save"
       aria-label="Save"
+      disabled={disabled}
     >
       <Save />
     </Button>
