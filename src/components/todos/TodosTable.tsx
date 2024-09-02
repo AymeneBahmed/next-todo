@@ -37,7 +37,14 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { ChevronDown, Menu, Pencil, Settings, Trash2 } from "lucide-react";
+import {
+  ChevronDown,
+  Menu,
+  Pencil,
+  Save,
+  Settings,
+  Trash2,
+} from "lucide-react";
 import {
   arrayMove,
   SortableContext,
@@ -528,6 +535,26 @@ function EditModeButton({
       aria-label="Enter edit mode"
     >
       <Pencil />
+    </Button>
+  );
+}
+
+function SaveEditModeButton({
+  onClick,
+  className,
+}: {
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
+}) {
+  return (
+    <Button
+      onClick={onClick}
+      className={cn(className)}
+      size="icon"
+      title="save"
+      aria-label="Save"
+    >
+      <Save />
     </Button>
   );
 }
