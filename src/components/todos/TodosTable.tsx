@@ -514,13 +514,15 @@ function DeleteButton({
 
 function EditModeButton({
   onClick,
+  className,
 }: {
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
 }) {
   return (
     <Button
       onClick={onClick}
-      className="ml-auto"
+      className={cn(className)}
       size="icon"
       title="edit mode"
       aria-label="Enter edit mode"
