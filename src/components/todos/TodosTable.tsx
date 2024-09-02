@@ -170,7 +170,7 @@ export default function TodosTable() {
               });
 
               return (
-                <Button {...attributes} {...listeners}>
+                <Button {...attributes} {...listeners} aria-label="Move todo">
                   <Menu size={20} />
                 </Button>
               );

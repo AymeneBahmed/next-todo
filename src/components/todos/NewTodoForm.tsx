@@ -86,7 +86,7 @@ export default function NewTodoInput() {
                 >
                   <FormControl>
                     <SelectTrigger
-                      className="bg-green-400 rounded-none text-white border-none focus:ring-0 focus:ring-offset-0 focus:bg-green-500"
+                      className="bg-green-400 rounded-none text-black border-none focus:ring-0 focus:ring-offset-0 focus:bg-green-500"
                       title="priority"
                     >
                       <SelectValue placeholder="P" />
