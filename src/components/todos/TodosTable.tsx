@@ -79,6 +79,9 @@ export default function TodosTable() {
   const [showDate, setShowDate] = useState(true);
   const [showTime, setShowTime] = useState(true);
   const [editMode, setEditMode] = useState(false);
+  const [editedTodos, setEditedTodos] = useState<
+    Pick<Todo, "id" | "title" | "priority">[]
+  >([]);
   const notification = useNotification();
   const columns: ColumnDef<Todo>[] = useMemo(
     () =>
@@ -119,7 +122,29 @@ export default function TodosTable() {
                 <Input
                   defaultValue={row.original.title}
                   onBlur={(e) => {
-                    row.original.title = e.target.value;
+                    const rowInEditedRows = editedTodos.find(
+                      (editedRow) => editedRow.id === row.original.id
+                    );
+
+                    setEditedTodos(
+                      rowInEditedRows
+                        ? editedTodos.map((editedRow) =>
+                            editedRow.id === rowInEditedRows.id
+                              ? {
+                                  ...rowInEditedRows,
+                                  title: row.original.title,
+                                }
+                              : editedRow
+                          )
+                        : [
+                            ...editedTodos,
+                            {
+                              id: row.original.id,
+                              title: e.target.value,
+                              priority: row.original.priority,
+                            },
+                          ]
+                    );
                   }}
                 />
               );
@@ -206,7 +231,7 @@ export default function TodosTable() {
           },
         },
       ] as const,
-    [editMode, showDate, showTime]
+    [editMode, editedTodos, showDate, showTime]
   );
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -251,13 +276,31 @@ export default function TodosTable() {
           <div className="ml-auto gap-3 flex">
             {editMode ? (
               <>
-                <ExitEditModeButton onClick={() => setEditMode(false)} />
+                <ExitEditModeButton
+                  onClick={() => {
+                    setEditedTodos([]);
+                    setEditMode(false);
+                  }}
+                />
                 <SaveEditModeButton
                   disabled={isPending}
                   onClick={() => {
-                    if (todosData?.every((todo) => todo.title !== "")) {
+                    if (editedTodos?.every((todo) => todo.title !== "")) {
                       starTransition(async () => {
                         try {
+                          if (todosData) {
+                            for (const editedTodo of editedTodos) {
+                              for (const todo of todosData) {
+                                if (editedTodo.id === todo.id) {
+                                  todo.title = editedTodo.title;
+                                  todo.priority = editedTodo.priority;
+
+                                  break;
+                                }
+                              }
+                            }
+                          }
+
                           await updateTodos(todosData ?? []);
 
                           notification.show({
@@ -271,6 +314,7 @@ export default function TodosTable() {
                           });
                         }
 
+                        setEditedTodos([]);
                         setEditMode(false);
                       });
                     } else {
