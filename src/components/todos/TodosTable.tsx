@@ -255,23 +255,30 @@ export default function TodosTable() {
                 <SaveEditModeButton
                   disabled={isPending}
                   onClick={() => {
-                    starTransition(async () => {
-                      try {
-                        await updateTodos(todosData ?? []);
+                    if (todosData?.every((todo) => todo.title !== "")) {
+                      starTransition(async () => {
+                        try {
+                          await updateTodos(todosData ?? []);
 
-                        notification.show({
-                          message: "Updated the table successfully!",
-                          state: "success",
-                        });
-                      } catch {
-                        notification.show({
-                          message: "Something went wrong! Please try again",
-                          state: "error",
-                        });
-                      }
+                          notification.show({
+                            message: "Updated the table successfully!",
+                            state: "success",
+                          });
+                        } catch {
+                          notification.show({
+                            message: "Something went wrong! Please try again",
+                            state: "error",
+                          });
+                        }
 
-                      setEditMode(false);
-                    });
+                        setEditMode(false);
+                      });
+                    } else {
+                      notification.show({
+                        message: "'Title' column can't be empty!",
+                        state: "error",
+                      });
+                    }
                   }}
                 />
               </>
