@@ -132,7 +132,7 @@ export default function TodosTable() {
                             editedRow.id === rowInEditedRows.id
                               ? {
                                   ...rowInEditedRows,
-                                  title: row.original.title,
+                                  title: e.target.value,
                                 }
                               : editedRow
                           )
