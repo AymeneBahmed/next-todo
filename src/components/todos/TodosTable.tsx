@@ -126,25 +126,17 @@ export default function TodosTable() {
                       (editedRow) => editedRow.id === row.original.id
                     );
 
-                    setEditedTodos(
-                      rowInEditedRows
-                        ? editedTodos.map((editedRow) =>
-                            editedRow.id === rowInEditedRows.id
-                              ? {
-                                  ...rowInEditedRows,
-                                  title: e.target.value,
-                                }
-                              : editedRow
-                          )
-                        : [
-                            ...editedTodos,
-                            {
-                              id: row.original.id,
-                              title: e.target.value,
-                              priority: row.original.priority,
-                            },
-                          ]
-                    );
+                    if (rowInEditedRows) {
+                      rowInEditedRows.title = e.target.value;
+                    } else {
+                      editedTodos.push({
+                        id: row.original.id,
+                        priority: row.original.priority,
+                        title: e.target.value,
+                      });
+                    }
+
+                    setEditedTodos(editedTodos);
                   }}
                 />
               );
