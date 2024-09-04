@@ -9,11 +9,14 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { signOut } from "next-auth/react";
+import { cn } from "@/lib/utils";
 
 export default function AvatarDropdownMenu({
   children,
+  className,
 }: {
   children: React.ReactNode;
+  className?: string;
 }) {
   async function logout() {
     await signOut({ callbackUrl: "/" });
@@ -21,7 +24,9 @@ export default function AvatarDropdownMenu({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
+      <DropdownMenuTrigger className={cn(className)}>
+        {children}
+      </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[10rem]">
         <DropdownMenuItem className="gap-3">
           <User2 size={19} /> Profile
