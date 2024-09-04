@@ -61,6 +61,13 @@ import { useNotification } from "@/hooks/useNotification";
 import { Checkbox } from "../ui/checkbox";
 import { ClipLoader } from "react-spinners";
 import { Input } from "../ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 async function fetcher(...args: Parameters<typeof fetch>) {
   return await (await fetch(...args)).json();
@@ -118,9 +125,13 @@ export default function TodosTable() {
           header: "Title",
           cell({ row }) {
             if (editMode) {
+              const rowInEditedRows = editedTodos.find(
+                (editedRow) => editedRow.id === row.original.id
+              );
+
               return (
                 <Input
-                  defaultValue={row.original.title}
+                  defaultValue={rowInEditedRows?.title || row.original.title}
                   onBlur={(e) => {
                     const rowInEditedRows = editedTodos.find(
                       (editedRow) => editedRow.id === row.original.id
@@ -145,7 +156,53 @@ export default function TodosTable() {
             return <>{row.original.title}</>;
           },
         },
-        { accessorKey: "priority", header: "Priority" },
+        {
+          accessorKey: "priority",
+          header: "Priority",
+          cell({ row }) {
+            if (editMode) {
+              const rowInEditedRows = editedTodos.find(
+                (editedRow) => editedRow.id === row.original.id
+              );
+
+              return (
+                <Select
+                  defaultValue={
+                    rowInEditedRows?.priority || row.original.priority
+                  }
+                  onValueChange={(e: Priority) => {
+                    const rowInEditedRows = editedTodos.find(
+                      (editedRow) => editedRow.id === row.original.id
+                    );
+
+                    if (rowInEditedRows) {
+                      rowInEditedRows.priority = e;
+                    } else {
+                      editedTodos.push({
+                        id: row.original.id,
+                        priority: e,
+                        title: row.original.title,
+                      });
+                    }
+
+                    setEditedTodos(editedTodos);
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={row.original.priority} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="LOW">LOW</SelectItem>
+                    <SelectItem value="MEDIUM">MEDIUM</SelectItem>
+                    <SelectItem value="HIGH">HIGH</SelectItem>
+                  </SelectContent>
+                </Select>
+              );
+            }
+
+            return <>{row.original.priority}</>;
+          },
+        },
         {
           accessorKey: "creationDate",
           header() {
