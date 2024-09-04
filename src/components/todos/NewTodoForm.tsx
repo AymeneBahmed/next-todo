@@ -66,7 +66,7 @@ export default function NewTodoInput() {
                   <Input
                     {...field}
                     placeholder="Add a new todo..."
-                    className="rounded-r-none focus-visible:ring-0 focus-visible:ring-offset-0 w-[30rem]"
+                    className="rounded-r-none focus-visible:ring-0 focus-visible:ring-offset-0 w-[30rem] bg-white/80 backdrop-blur-lg placeholder:text-gray-600"
                     onFocus={() => setIsInputFocused(true)}
                     onBlur={() => setIsInputFocused(false)}
                   />
