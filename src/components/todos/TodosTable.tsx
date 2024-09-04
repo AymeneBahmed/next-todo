@@ -352,6 +352,9 @@ export default function TodosTable() {
 
                           await updateTodos(todosData ?? []);
 
+                          // update rows' colors to reflect priority
+                          mutate();
+
                           notification.show({
                             message: "Updated the table successfully!",
                             state: "success",
