@@ -400,7 +400,16 @@ export default function TodosTable() {
               {todosTable.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className={cn(
+                        header.column.id === "checked" && "w-24",
+                        header.column.id === "creationDate" && "w-[24rem]",
+                        header.column.id === "priority" && "w-[11rem]",
+                        header.column.id === "title" && "w-[23rem]",
+                        header.column.id === "drag-handle" && "w-[12rem]"
+                      )}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -582,7 +591,16 @@ function TodoDraggableRow({ row }: { row: Row<Todo> }) {
       style={style}
     >
       {row.getVisibleCells().map((cell) => (
-        <TableCell key={cell.id}>
+        <TableCell
+          key={cell.id}
+          className={cn(
+            cell.column.id === "checked" && "w-24",
+            cell.column.id === "creationDate" && "w-[24rem]",
+            cell.column.id === "priority" && "w-[11rem]",
+            cell.column.id === "title" && "w-[23rem]",
+            cell.column.id === "drag-handle" && "w-[12rem]"
+          )}
+        >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
         </TableCell>
       ))}
