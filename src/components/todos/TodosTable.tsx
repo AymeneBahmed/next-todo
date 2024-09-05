@@ -396,7 +396,7 @@ export default function TodosTable() {
         </div>
         <div className="rounded-md border">
           <Table className="bg-white overflow-hidden rounded-md">
-            <TableHeader className="bg-white">
+            <TableHeader className="bg-white table w-full table-fixed">
               {todosTable.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
@@ -412,7 +412,7 @@ export default function TodosTable() {
                 </TableRow>
               ))}
             </TableHeader>
-            <TableBody>
+            <TableBody className="block overflow-y-scroll no-scrollbar [&_tr]:table [&_tr]:table-fixed [&_tr]:w-full">
               {isLoading && (
                 <TableRow>
                   <TableCell className="text-center" colSpan={columns.length}>
