@@ -10,6 +10,7 @@ import {
 } from "./ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function AvatarDropdownMenu({
   children,
@@ -28,8 +29,10 @@ export default function AvatarDropdownMenu({
         {children}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[10rem]">
-        <DropdownMenuItem className="gap-3">
-          <User2 size={19} /> Profile
+        <DropdownMenuItem asChild>
+          <Link href="/dashboard/profile" className="gap-3">
+            <User2 size={19} /> Profile
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="gap-3 text-destructive" onClick={logout}>
