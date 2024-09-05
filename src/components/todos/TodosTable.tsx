@@ -314,7 +314,19 @@ export default function TodosTable() {
 
       mutate(reorderedTodos, false);
 
-      await updateTodos(reorderedTodos);
+      try {
+        await updateTodos(reorderedTodos);
+
+        notification.show({
+          message: "Order changed successfully!",
+          state: "success",
+        });
+      } catch (error) {
+        notification.show({
+          message: "Something went wrong while re-ordering!",
+          state: "error",
+        });
+      }
     }
   }
 
