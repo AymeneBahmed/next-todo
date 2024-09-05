@@ -10,7 +10,11 @@ export default function LayoutProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const excludedRoutes: `/${string}`[] = ["/dashboard", ...authRoutes];
+  const excludedRoutes: `/${string}`[] = [
+    "/dashboard",
+    "/dashboard/profile",
+    ...authRoutes,
+  ];
   const pathname = usePathname();
 
   return (
