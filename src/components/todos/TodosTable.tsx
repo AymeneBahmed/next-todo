@@ -421,7 +421,7 @@ export default function TodosTable() {
                 </TableRow>
               ))}
             </TableHeader>
-            <TableBody className="block overflow-y-scroll no-scrollbar [&_tr]:table [&_tr]:table-fixed [&_tr]:w-full">
+            <TableBody className="block overflow-y-scroll no-scrollbar [&_tr]:table [&_tr]:table-fixed [&_tr]:w-full h-[calc(73px*6)]">
               {isLoading && (
                 <TableRow>
                   <TableCell className="text-center" colSpan={columns.length}>
