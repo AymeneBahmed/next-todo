@@ -11,6 +11,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session;
     },
+
+    jwt({ trigger, session, token }) {
+      if (trigger === "update" && session?.name) {
+        token.name = session.name;
+      }
+
+      return token;
+    },
   },
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
