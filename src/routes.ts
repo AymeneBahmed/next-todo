@@ -4,4 +4,7 @@ export const authRoutes: `/${string}`[] = [
   "/email-verification",
 ];
 
-export const protectedRoutes: `/${string}`[] = ["/dashboard"];
+export const protectedRoutes: `/${string}`[] = [
+  "/dashboard",
+  "/dashboard/profile",
+];
