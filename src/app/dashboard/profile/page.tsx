@@ -13,6 +13,7 @@ import { auth } from "@/lib/auth";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import FullNameField from "./FullNameField";
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -40,13 +41,10 @@ export default async function ProfilePage() {
             <Avatar className="size-28 m-auto" />
 
             <div className="space-y-6 mt-10">
-              <div>
-                <div>Full Name:</div>
-                <div className="text-muted-foreground">{session.user.name}</div>
-              </div>
+              <FullNameField />
 
               <div>
-                <div>Email:</div>
+                <div className="underline underline-offset-4">Email:</div>
                 <div className="text-muted-foreground">
                   {session.user.email}
                 </div>
