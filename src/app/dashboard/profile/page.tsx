@@ -13,7 +13,7 @@ import { auth } from "@/lib/auth";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import FullNameField from "./FullNameField";
+import FullNameField from "../../../components/profile/FullNameField";
 
 export default async function ProfilePage() {
   const session = await auth();
