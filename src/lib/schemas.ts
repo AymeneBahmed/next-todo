@@ -23,3 +23,7 @@ export const NewTodoSchema = z.object({
     required_error: "Please select priority",
   }),
 });
+
+export const DeleteAccountSchema = z.object({
+  email: z.string().email({ message: "required" }),
+});
