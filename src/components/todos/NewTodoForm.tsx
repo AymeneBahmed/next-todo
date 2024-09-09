@@ -18,6 +18,7 @@ import {
 import { NewTodoSchema } from "@/lib/schemas";
 import { createTodo } from "@/actions/todo";
 import { useNotification } from "@/hooks/useNotification";
+import { mutate } from "swr";
 
 export default function NewTodoInput() {
   const form = useForm<z.infer<typeof NewTodoSchema>>({
@@ -42,6 +43,8 @@ export default function NewTodoInput() {
       }
 
       if (creationState.success) {
+        await mutate("/api/todo");
+
         notification.show({ message: creationState.success, state: "success" });
       }
     });
