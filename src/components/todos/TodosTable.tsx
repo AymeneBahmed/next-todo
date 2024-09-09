@@ -433,14 +433,12 @@ export default function TodosTable() {
                 </TableRow>
               ))}
             </TableHeader>
-            <TableBody className="block overflow-y-scroll custom-scrollbar [&_tr]:table [&_tr]:table-fixed [&_tr]:w-full h-[calc(73px*6)]">
+            <TableBody className="block relative overflow-y-scroll custom-scrollbar [&_tr]:table [&_tr]:table-fixed [&_tr]:w-full h-[calc(73px*6)]">
               {isLoading && (
-                <TableRow>
-                  <TableCell className="text-center" colSpan={columns.length}>
-                    <ClipLoader speedMultiplier={0.7} />
-                    <div>Loading...</div>
-                  </TableCell>
-                </TableRow>
+                <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center flex-col">
+                  <ClipLoader speedMultiplier={0.7} />
+                  <div>Loading...</div>
+                </div>
               )}
               {todosTable.getRowModel().rows.length ? (
                 <SortableContext
@@ -460,14 +458,9 @@ export default function TodosTable() {
               ) : (
                 <>
                   {!isLoading && (
-                    <TableRow>
-                      <TableCell
-                        colSpan={columns.length}
-                        className="h-24 text-center"
-                      >
-                        No todos.
-                      </TableCell>
-                    </TableRow>
+                    <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2">
+                      No todos.
+                    </div>
                   )}
                 </>
               )}
