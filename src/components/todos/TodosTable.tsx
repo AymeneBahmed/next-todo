@@ -517,17 +517,36 @@ function TodoPriorityFilterer({
     <div className="flex flex-col relative">
       <div className="flex *:w-1/3 *:text-center">
         {visibilePriorities.includes("LOW") && (
-          <div className="text-black rounded-tl bg-emerald-500" title="low">
+          <div
+            className={cn(
+              "text-black rounded-tl bg-emerald-500",
+              visibilePriorities.length === 1 && "rounded-tr"
+            )}
+            title="low"
+          >
             L
           </div>
         )}
         {visibilePriorities.includes("MEDIUM") && (
-          <div className="text-black bg-orange-500" title="medium">
+          <div
+            className={cn(
+              "text-black bg-orange-500",
+              !visibilePriorities.includes("LOW") && "rounded-tl",
+              !visibilePriorities.includes("HIGH") && "rounded-tr"
+            )}
+            title="medium"
+          >
             M
           </div>
         )}
         {visibilePriorities.includes("HIGH") && (
-          <div className="text-black rounded-tr bg-red-500" title="high">
+          <div
+            className={cn(
+              "text-black rounded-tr bg-red-500",
+              visibilePriorities.length === 1 && "rounded-tl"
+            )}
+            title="high"
+          >
             H
           </div>
         )}
