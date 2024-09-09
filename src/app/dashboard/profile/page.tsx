@@ -14,6 +14,8 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import FullNameField from "../../../components/profile/FullNameField";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import DeleteAccountDialog from "@/components/profile/DeleteAccountDialog";
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -54,12 +56,20 @@ export default async function ProfilePage() {
 
           <CardFooter className="mt-6 flex-col gap-4">
             <LogoutButton className="w-full" />
-            <Button
-              variant="outline"
-              className="w-full border-destructive text-red-600 hover:bg-destructive hover:text-white"
-            >
-              Delete account
-            </Button>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="w-full border-destructive text-red-600 hover:bg-destructive hover:text-white"
+                >
+                  Delete account
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="gap-2">
+                <DeleteAccountDialog />
+              </DialogContent>
+            </Dialog>
           </CardFooter>
         </Card>
       </div>
