@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
@@ -15,9 +16,11 @@ import Link from "next/link";
 export default function AvatarDropdownMenu({
   children,
   className,
+  userFullName,
 }: {
   children: React.ReactNode;
   className?: string;
+  userFullName?: string;
 }) {
   async function logout() {
     await signOut({ callbackUrl: "/" });
@@ -29,6 +32,8 @@ export default function AvatarDropdownMenu({
         {children}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[10rem]">
+        {userFullName && <DropdownMenuLabel>{userFullName}</DropdownMenuLabel>}
+
         <DropdownMenuItem asChild>
           <Link href="/dashboard/profile" className="gap-3">
             <User2 size={19} /> Profile

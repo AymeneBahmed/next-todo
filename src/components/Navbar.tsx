@@ -47,7 +47,7 @@ export default function Navbar() {
       </ul>
 
       {session.data?.user ? (
-        <AvatarDropdownMenu>
+        <AvatarDropdownMenu userFullName={session.data.user.name || ""}>
           <Avatar className="size-12" />
         </AvatarDropdownMenu>
       ) : (
