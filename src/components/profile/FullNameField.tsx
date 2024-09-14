@@ -26,7 +26,9 @@ export default function FullNameField() {
     e.preventDefault();
 
     startTransition(async () => {
-      const newName = new FormData(e.currentTarget).get("new-name") as string;
+      const newName = (
+        new FormData(e.currentTarget).get("new-name") as string
+      ).trim();
       const submissionState = await changeUserName(newName);
 
       if (submissionState.success) {
