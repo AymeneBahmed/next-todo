@@ -14,14 +14,16 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  accounts      Account[]
-  sessions      Session[]
+  id                String    @id @default(cuid())
+  name              String?
+  email             String    @unique
+  emailVerified     DateTime?
+  image             String?
+  uploadedImage     Bytes?    @db.ByteA
+  uploadedImageType String?
+  password          String?
+  accounts          Account[]
+  sessions          Session[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
