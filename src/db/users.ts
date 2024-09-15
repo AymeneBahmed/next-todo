@@ -7,3 +7,11 @@ export async function getUserByEmail(email: string) {
     return null;
   }
 }
+
+export async function getUserById(id: string) {
+  try {
+    return await db.user.findUnique({ where: { id } });
+  } catch {
+    return null;
+  }
+}
