@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { Priority, Todo } from "@prisma/client";
-import { cn } from "@/lib/utils";
+import { cn, fetcher } from "@/lib/utils";
 import {
   CSSProperties,
   Dispatch,
