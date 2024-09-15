@@ -69,10 +69,6 @@ import {
   SelectValue,
 } from "../ui/select";
 
-async function fetcher(...args: Parameters<typeof fetch>) {
-  return await (await fetch(...args)).json();
-}
-
 export default function TodosTable() {
   const {
     data: todosData,
