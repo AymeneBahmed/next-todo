@@ -4,7 +4,6 @@ import { db } from "@/db";
 import { getUserByEmail } from "@/db/users";
 import { auth } from "@/lib/auth";
 import { DeleteAccountSchema } from "@/lib/schemas";
-import { compareSync } from "bcryptjs";
 import { z } from "zod";
 
 export async function changeUserName(newName: string) {
@@ -73,6 +72,28 @@ export async function deleteAccount(
     });
 
     return { success: "Account deleted successfully!" };
+  } catch {
+    return { error: "Something went wrong! Please try again." };
+  }
+}
+
+export async function uploadUserImage(formData: FormData) {
+  try {
+    const uploadedImage = formData.get("new-avatar") as File;
+    const arrayBuffer = await uploadedImage.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      throw new Error();
+    }
+
+    await db.user.update({
+      where: { id: session.user.id },
+      data: { uploadedImage: buffer, uploadedImageType: uploadedImage.type },
+    });
+
+    return { success: "Profile picture updated successfully!" };
   } catch {
     return { error: "Something went wrong! Please try again." };
   }
