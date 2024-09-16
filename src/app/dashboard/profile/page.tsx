@@ -1,4 +1,3 @@
-import Avatar from "@/components/Avatar";
 import LogoutButton from "@/components/LogoutButton";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +15,7 @@ import { redirect } from "next/navigation";
 import FullNameField from "../../../components/profile/FullNameField";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DeleteAccountDialog from "@/components/profile/DeleteAccountDialog";
+import AvatarPicture from "@/components/profile/AvatarPicture";
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -40,7 +40,9 @@ export default async function ProfilePage() {
           </CardHeader>
 
           <CardContent>
-            <Avatar className="size-28 m-auto" />
+            <div>
+              <AvatarPicture />
+            </div>
 
             <div className="space-y-6 mt-10">
               <FullNameField />

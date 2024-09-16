@@ -1,11 +1,14 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { useSession } from "next-auth/react";
+import { cn, fetcher } from "@/lib/utils";
+import { User } from "@prisma/client";
 import Image from "next/image";
+import useSWR from "swr";
 
 export default function Avatar({ className }: { className?: string }) {
-  const session = useSession();
+  const { data: user, isLoading } = useSWR<
+    Pick<User, "image" | "uploadedImageType"> & { uploadedImage?: string }
+  >("/api/user", fetcher);
 
   return (
     <div
@@ -14,8 +17,17 @@ export default function Avatar({ className }: { className?: string }) {
         className
       )}
     >
-      {session.data?.user?.image && (
-        <Image src={session.data.user.image} alt="profile-picture" fill />
+      {!isLoading && (user?.image || user?.uploadedImage) && (
+        <Image
+          src={
+            user.uploadedImage
+              ? `data:${user.uploadedImageType};base64,${user.uploadedImage}`
+              : user.image!
+          }
+          alt="profile picture"
+          fill
+          className="object-cover"
+        />
       )}
     </div>
   );
