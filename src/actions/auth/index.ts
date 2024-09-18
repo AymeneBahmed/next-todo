@@ -28,7 +28,7 @@ export async function signup(values: z.infer<typeof SignupSchema>) {
     await db.user.create({
       data: {
         email: data.email,
-        name: `${data.firstName} ${data.lastName || ""}`,
+        name: data.name,
         password: hashSync(data.password),
       },
     });

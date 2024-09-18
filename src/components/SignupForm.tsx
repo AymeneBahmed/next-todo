@@ -72,45 +72,23 @@ export default function SignupForm() {
 
         <Form {...form}>
           <form action="" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex gap-5 [&>*]:w-[50%]">
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormLabel>First Name</FormLabel>
-                    <FormControl
-                      className={`bg-gray-100 ${
-                        fieldState.invalid && "border-red-400 !ring-red-600"
-                      }`}
-                    >
-                      <Input placeholder="John" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="lastName"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Last Name{" "}
-                      <span className="text-gray-500 italic">(Optional)</span>
-                    </FormLabel>
-                    <FormControl
-                      className={`bg-gray-100 ${
-                        fieldState.invalid && "border-red-400 !ring-red-600"
-                      }`}
-                    >
-                      <Input placeholder="Cena" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field, fieldState }) => (
+                <FormItem>
+                  <FormLabel>First Name</FormLabel>
+                  <FormControl
+                    className={`bg-gray-100 ${
+                      fieldState.invalid && "border-red-400 !ring-red-600"
+                    }`}
+                  >
+                    <Input placeholder="John" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
