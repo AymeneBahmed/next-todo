@@ -28,25 +28,31 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import Social from "./Social";
 import Divider from "./Divider";
+import FormSuccess from "./FormSuccess";
 
 export default function LoginForm() {
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
   });
   const [error, setError] = useState<string | null>();
+  const [success, setSuccess] = useState<string | null>();
   const [isPending, startTransition] = useTransition();
 
   async function onSubmit(values: z.infer<typeof LoginSchema>) {
     startTransition(async () => {
-      const loginError = await login(values);
+      const loginState = await login(values);
 
-      if (loginError) {
-        setError(loginError.error);
+      if (loginState?.error) {
+        setError(loginState.error);
+        setSuccess(null);
 
         return;
       }
 
-      setError(null);
+      if (loginState?.success) {
+        setSuccess(loginState.success);
+        setError(null);
+      }
     });
   }
 
@@ -117,6 +123,7 @@ export default function LoginForm() {
               )}
             />
             {error && <FormError message={error} />}
+            {success && <FormSuccess message={success} />}
             <Button className="w-full mt-10" type="submit" disabled={isPending}>
               Login
             </Button>
