@@ -63,13 +63,13 @@ export default function NewTodoInput() {
             name="todo"
             control={form.control}
             render={({ field }) => (
-              <FormItem className="space-y-0">
+              <FormItem className="space-y-0 transition-all w-[max(35vw,353px)] max-[560px]:w-[45vw]">
                 <FormLabel className="sr-only">New todo</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     placeholder="Add a new todo..."
-                    className="rounded-r-none focus-visible:ring-0 focus-visible:ring-offset-0 w-[30rem] bg-white/80 backdrop-blur-lg placeholder:text-gray-600"
+                    className="rounded-r-none focus-visible:ring-0 focus-visible:ring-offset-0 bg-white/80 backdrop-blur-lg placeholder:text-gray-600"
                     onFocus={() => setIsInputFocused(true)}
                     onBlur={() => setIsInputFocused(false)}
                   />
