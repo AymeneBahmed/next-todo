@@ -8,3 +8,10 @@ export function cn(...inputs: ClassValue[]) {
 export async function fetcher(...args: Parameters<typeof fetch>) {
   return await (await fetch(...args)).json();
 }
+
+export function capitalize(str: string) {
+  return str
+    .split(" ")
+    .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+}
