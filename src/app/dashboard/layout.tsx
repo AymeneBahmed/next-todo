@@ -8,7 +8,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="size-full bg-gradient-to-b from-teal-400 to-blue-500">
-      <Image src={backgroundImg} alt="" fill quality={100} />
+      <Image src={backgroundImg} alt="" fill className="object-cover" />
 
       {children}
     </div>
