@@ -18,7 +18,7 @@ export default async function DashboardPage() {
           <div className="size-full absolute scale-[1.12] top-0 z-0 rounded-full bg-gradient-to-br from-emerald-300 to-primary"></div>
         </AvatarDropdownMenu>
       </div>
-      <div className="container mx-auto py-10 space-y-20">
+      <div className="min-[907px]:container mx-auto py-10 space-y-20">
         <NewTodoForm />
         <TodosTable />
       </div>

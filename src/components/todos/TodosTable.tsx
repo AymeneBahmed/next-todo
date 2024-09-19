@@ -329,7 +329,7 @@ export default function TodosTable() {
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
       <div className="space-y-2">
-        <div className="flex items-end justify-start gap-3 relative max-[630px]:[&>form]:hidden">
+        <div className="flex items-end justify-start gap-3 relative max-[630px]:[&>form]:hidden max-[906px]:container">
           <div className="ml-auto gap-3 flex max-[630px]:hidden">
             {editMode ? (
               <>
@@ -401,6 +401,7 @@ export default function TodosTable() {
             todosTable={todosTable}
             className="max-[630px]:hidden min-w-[157px]"
           />
+
           <TodoPriorityFilterer
             todosTable={todosTable}
             visibilePriorities={visibilePriorities}
@@ -408,7 +409,7 @@ export default function TodosTable() {
           />
           <VisibleColumnsButton todosTable={todosTable} />
         </div>
-        <div className="hidden max-[630px]:flex relative gap-3">
+        <div className="hidden max-[630px]:flex relative gap-3 container">
           <TodoTitleFilterer todosTable={todosTable} className="flex-grow" />
           <div className="flex gap-3">
             {editMode ? (
@@ -484,11 +485,17 @@ export default function TodosTable() {
                     <TableHead
                       key={header.id}
                       className={cn(
-                        header.column.id === "checked" && "w-24",
-                        header.column.id === "creationDate" && "w-[24rem]",
-                        header.column.id === "priority" && "w-[11rem]",
-                        header.column.id === "title" && "w-[23rem]",
-                        header.column.id === "drag-handle" && "w-[12rem]"
+                        header.column.id === "checked" &&
+                          "w-[clamp(3rem,7rem,5vw)]",
+                        header.column.id === "creationDate" &&
+                          "w-[max(20rem,15vw)]",
+                        header.column.id === "creationDate" &&
+                          !showDate &&
+                          "w-[max(10rem,10vw)]",
+                        header.column.id === "priority" && "w-[max(7rem,10vw)]",
+                        header.column.id === "title" && "w-[max(16rem,20vw)]",
+                        header.column.id === "drag-handle" &&
+                          "w-[max(6rem,7vw)]"
                       )}
                     >
                       {header.isPlaceholder
@@ -521,7 +528,11 @@ export default function TodosTable() {
                       visibilePriorities.includes(row.getValue("priority"))
                     )
                     .map((row) => (
-                      <TodoDraggableRow row={row} key={row.id} />
+                      <TodoDraggableRow
+                        row={row}
+                        key={row.id}
+                        showDate={showDate}
+                      />
                     ))}
                 </SortableContext>
               ) : (
@@ -650,7 +661,13 @@ function TodoPriorityFilterer({
   );
 }
 
-function TodoDraggableRow({ row }: { row: Row<Todo> }) {
+function TodoDraggableRow({
+  row,
+  showDate,
+}: {
+  row: Row<Todo>;
+  showDate?: boolean;
+}) {
   const { setNodeRef, transform, transition, isDragging } = useSortable({
     id: row.original.id,
   });
@@ -687,11 +704,14 @@ function TodoDraggableRow({ row }: { row: Row<Todo> }) {
         <TableCell
           key={cell.id}
           className={cn(
-            cell.column.id === "checked" && "w-24",
-            cell.column.id === "creationDate" && "w-[24rem]",
-            cell.column.id === "priority" && "w-[11rem]",
-            cell.column.id === "title" && "w-[23rem]",
-            cell.column.id === "drag-handle" && "w-[12rem]"
+            cell.column.id === "checked" && "w-[clamp(3rem,7rem,5vw)]",
+            cell.column.id === "creationDate" && "w-[max(20rem,15vw)]",
+            cell.column.id === "creationDate" &&
+              !showDate &&
+              "w-[max(10rem,10vw)]",
+            cell.column.id === "priority" && "w-[max(7rem,10vw)]",
+            cell.column.id === "title" && "w-[max(16rem,20vw)] break-all",
+            cell.column.id === "drag-handle" && "w-[max(6rem,7vw)]"
           )}
         >
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -731,7 +751,6 @@ function VisibleColumnsButton({ todosTable }: { todosTable: TableType<Todo> }) {
 function DeleteButton({
   todosTable,
   className,
-  
 }: {
   todosTable: TableType<Todo>;
   className?: string;
