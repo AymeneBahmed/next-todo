@@ -329,8 +329,8 @@ export default function TodosTable() {
   return (
     <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
       <div className="space-y-2">
-        <div className="flex items-end gap-3 relative">
-          <div className="ml-auto gap-3 flex">
+        <div className="flex items-end justify-start gap-3 relative max-[630px]:[&>form]:hidden">
+          <div className="ml-auto gap-3 flex max-[630px]:hidden">
             {editMode ? (
               <>
                 <ExitEditModeButton
@@ -393,14 +393,87 @@ export default function TodosTable() {
               />
             )}
           </div>
-          <DeleteButton todosTable={todosTable} />
-          <TodoTitleFilterer todosTable={todosTable} />
+          <DeleteButton
+            todosTable={todosTable}
+            className="max-[630px]:hidden"
+          />
+          <TodoTitleFilterer
+            todosTable={todosTable}
+            className="max-[630px]:hidden min-w-[157px]"
+          />
           <TodoPriorityFilterer
             todosTable={todosTable}
             visibilePriorities={visibilePriorities}
             setVisiblePriorities={setVisiblePriorities}
           />
           <VisibleColumnsButton todosTable={todosTable} />
+        </div>
+        <div className="hidden max-[630px]:flex relative gap-3">
+          <TodoTitleFilterer todosTable={todosTable} className="flex-grow" />
+          <div className="flex gap-3">
+            {editMode ? (
+              <>
+                <ExitEditModeButton
+                  onClick={() => {
+                    setEditedTodos([]);
+                    setEditMode(false);
+                  }}
+                />
+                <SaveEditModeButton
+                  disabled={isPending}
+                  onClick={() => {
+                    if (editedTodos?.every((todo) => todo.title !== "")) {
+                      starTransition(async () => {
+                        try {
+                          if (todosData) {
+                            for (const editedTodo of editedTodos) {
+                              for (const todo of todosData) {
+                                if (editedTodo.id === todo.id) {
+                                  todo.title = editedTodo.title;
+                                  todo.priority = editedTodo.priority;
+
+                                  break;
+                                }
+                              }
+                            }
+                          }
+
+                          await updateTodos(todosData ?? []);
+
+                          // update rows' colors to reflect priority
+                          mutate();
+
+                          notification.show({
+                            message: "Updated the table successfully!",
+                            state: "success",
+                          });
+                        } catch {
+                          notification.show({
+                            message: "Something went wrong! Please try again",
+                            state: "error",
+                          });
+                        }
+
+                        setEditedTodos([]);
+                        setEditMode(false);
+                      });
+                    } else {
+                      notification.show({
+                        message: "'Title' column can't be empty!",
+                        state: "error",
+                      });
+                    }
+                  }}
+                />
+              </>
+            ) : (
+              <EnterEditModeButton
+                onClick={() => setEditMode(true)}
+                disabled={isLoading}
+              />
+            )}
+            <DeleteButton todosTable={todosTable} />
+          </div>
         </div>
         <div className="rounded-md border">
           <Table className="bg-white overflow-hidden rounded-md">
@@ -658,6 +731,7 @@ function VisibleColumnsButton({ todosTable }: { todosTable: TableType<Todo> }) {
 function DeleteButton({
   todosTable,
   className,
+  
 }: {
   todosTable: TableType<Todo>;
   className?: string;
