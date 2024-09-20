@@ -710,7 +710,8 @@ function TodoDraggableRow({
               !showDate &&
               "w-[max(10rem,10vw)]",
             cell.column.id === "priority" && "w-[max(7rem,10vw)]",
-            cell.column.id === "title" && "w-[max(16rem,20vw)] break-all",
+            cell.column.id === "title" &&
+              "w-[max(16rem,20vw)] break-words hyphens-auto",
             cell.column.id === "drag-handle" && "w-[max(6rem,7vw)]"
           )}
         >
