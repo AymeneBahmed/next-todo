@@ -45,6 +45,8 @@ export async function createTodo(values: z.infer<typeof NewTodoSchema>) {
       },
     });
 
+    revalidatePath("/dashboard");
+
     return { success: "Added a new todo!" };
   } catch {
     return { error: "Something went wrong! Please try again." };
