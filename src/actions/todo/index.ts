@@ -62,6 +62,8 @@ export async function updateTodos(newData: Todo[]) {
       })
     )
   );
+
+  revalidatePath("/dashboard");
 }
 
 export async function deleteTodos(data: Todo[]) {
@@ -69,5 +71,5 @@ export async function deleteTodos(data: Todo[]) {
     data.map((todo) => db.todo.delete({ where: { id: todo.id } }))
   );
 
-  revalidatePath("/dashboard", "page");
+  revalidatePath("/dashboard");
 }
