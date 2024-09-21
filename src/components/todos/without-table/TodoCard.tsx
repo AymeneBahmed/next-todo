@@ -47,7 +47,7 @@ export default function TodoCard({ todo }: { todo: Todo }) {
       style={style}
       ref={setNodeRef}
       className={cn(
-        "rounded-md relative overflow-hidden border-0 border-l-[6px] min-h-[125px] pt-4",
+        "rounded-md relative overflow-hidden border-[6px] min-h-[125px] pt-4",
         todo.priority === "LOW" &&
           "bg-emerald-50 text-emerald-700 border-emerald-200",
         todo.priority === "MEDIUM" &&
