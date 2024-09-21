@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardDescription,
@@ -5,11 +7,45 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { capitalize, cn } from "@/lib/utils";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { Todo } from "@prisma/client";
+import { CSSProperties } from "react";
 
 export default function TodoCard({ todo }: { todo: Todo }) {
+  const {
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+    attributes,
+    listeners,
+  } = useSortable({
+    id: todo.id,
+  });
+
+  if (transform && isDragging) {
+    transform.scaleX = 1.01;
+    transform.scaleY = 1.01;
+  }
+
+  const style: CSSProperties = {
+    position: "relative",
+    zIndex: isDragging ? 1 : 0,
+    opacity: isDragging ? 0.8 : 1,
+    transform: CSS.Transform.toString(transform),
+    cursor: isDragging ? "grabbing" : "grab",
+    userSelect: isDragging ? "none" : "auto",
+    touchAction: "none",
+    transition,
+  };
+
   return (
     <Card
+      {...attributes}
+      {...listeners}
+      style={style}
+      ref={setNodeRef}
       className={cn(
         "rounded-md relative overflow-hidden border-0 border-l-[6px] min-h-[125px] pt-4",
         todo.priority === "LOW" &&
