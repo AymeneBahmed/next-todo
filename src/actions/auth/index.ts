@@ -33,7 +33,7 @@ export async function signup(values: z.infer<typeof SignupSchema>) {
       },
     });
 
-    sendEmailVerificationMail(
+    await sendEmailVerificationMail(
       data.email,
       (await generateVerificationToken(data.email)).token
     );
@@ -103,7 +103,7 @@ export async function login(values: z.infer<typeof LoginSchema>) {
     }
 
     if (!existingUser.emailVerified) {
-      sendEmailVerificationMail(
+      await sendEmailVerificationMail(
         data.email,
         (await generateVerificationToken(data.email)).token
       );

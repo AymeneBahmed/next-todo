@@ -1,14 +1,25 @@
 import EmailVerificationMailTemplate from "@/components/mails/EmailVerificationMailTemplate";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_KEY);
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: "joewilliamdd31@gmail.com",
+    pass: "orahazhvrejgwcww",
+  },
+});
 
-export function sendEmailVerificationMail(email: string, token: string) {
-  resend.emails.send({
+export async function sendEmailVerificationMail(email: string, token: string) {
+  await transporter.sendMail({
     // TODO: change later in production
-    from: "onboarding@resend.dev",
+    from: "Joe William <joewilliamdd31@gmail.com>",
     to: email,
     subject: "Verify your account",
-    react: EmailVerificationMailTemplate({ token }),
+    html: `Click <a href=${
+      "https://next-todo-fawn-xi.vercel.app/email-verification?token=" + token
+    }>here</a> to verify your account.
+    `,
   });
 }
