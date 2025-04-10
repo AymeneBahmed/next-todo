@@ -12,14 +12,16 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendEmailVerificationMail(email: string, token: string) {
+  const url = process.env.URL || "http://localhost:3000";
+
   await transporter.sendMail({
     // TODO: change later in production
-    from: "Joe William <joewilliamdd31@gmail.com>",
+    from: "Next Todo <joewilliamdd31@gmail.com>",
     to: email,
     subject: "Verify your account",
-    html: `Click <a href=${
-      "https://next-todo-fawn-xi.vercel.app/email-verification?token=" + token
-    }>here</a> to verify your account.
+    html: `Visit this link to verify: ${
+      url + "/email-verification?token=" + token
+    }
     `,
   });
 }
