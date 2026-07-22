@@ -1,5 +1,5 @@
 import authConfig from "@/lib/auth.config";
-import { MiddlewareConfig } from "next/server";
+import { ProxyConfig } from "next/server";
 import NextAuth from "next-auth";
 import { authRoutes, protectedRoutes } from "./routes";
 
@@ -9,7 +9,7 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth;
 
   const isProtectedRoute = protectedRoutes.includes(
-    req.nextUrl.pathname as `/${string}`
+    req.nextUrl.pathname as `/${string}`,
   );
   const isAuthRoute = authRoutes.includes(req.nextUrl.pathname as `/${string}`);
 
@@ -28,7 +28,7 @@ export default auth((req) => {
   return;
 });
 
-export const config: MiddlewareConfig = {
+export const config: ProxyConfig = {
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
