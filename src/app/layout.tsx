@@ -3,11 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
-import dynamic from "next/dynamic";
-
-const LayoutProvider = dynamic(() => import("@/components/LayoutProvider"), {
-  ssr: false,
-});
+import LayoutProvider from "@/components/LayoutProvider";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
