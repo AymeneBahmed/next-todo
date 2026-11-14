@@ -22,7 +22,7 @@ export default auth((req) => {
   }
 
   if (isAuthRoute) {
-    return Response.redirect(new URL("/", req.nextUrl));
+    return Response.redirect(new URL("/dashboard", req.nextUrl));
   }
 
   return;
