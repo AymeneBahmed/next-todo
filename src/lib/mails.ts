@@ -1,4 +1,3 @@
-import EmailVerificationMailTemplate from "@/components/mails/EmailVerificationMailTemplate";
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
@@ -7,7 +6,7 @@ const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: "aymendd3131@gmail.com",
-    pass: "ruchtbpdlradolbf",
+    pass: process.env.APP_PASSWORD,
   },
 });
 
