@@ -16,6 +16,7 @@ import FullNameField from "../../../components/profile/FullNameField";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DeleteAccountDialog from "@/components/profile/DeleteAccountDialog";
 import AvatarPicture from "@/components/profile/AvatarPicture";
+import { SessionProvider } from "next-auth/react";
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -25,7 +26,7 @@ export default async function ProfilePage() {
   }
 
   return (
-    <>
+    <SessionProvider>
       <Button className="absolute top-10 left-6 z-[1]" size="icon" asChild>
         <Link href="/dashboard" aria-label="Go back to todos">
           <ArrowLeft />
@@ -75,6 +76,6 @@ export default async function ProfilePage() {
           </CardFooter>
         </Card>
       </div>
-    </>
+    </SessionProvider>
   );
 }
