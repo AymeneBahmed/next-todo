@@ -3,6 +3,11 @@ import TodosTable from "@/components/todos/TodosTable";
 import AvatarDropdownMenu from "@/components/AvatarDropdownMenu";
 import Avatar from "@/components/Avatar";
 import { auth } from "@/lib/auth";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Todo App | Dashboard",
+};
 
 export default async function DashboardPage() {
   const session = await auth();

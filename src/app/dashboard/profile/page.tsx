@@ -17,6 +17,12 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DeleteAccountDialog from "@/components/profile/DeleteAccountDialog";
 import AvatarPicture from "@/components/profile/AvatarPicture";
 import { SessionProvider } from "next-auth/react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Todo App | Profile",
+};
+
 
 export default async function ProfilePage() {
   const session = await auth();
