@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
-import LayoutProvider from "@/components/LayoutProvider";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -21,10 +20,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`h-[100dvh] ${inter.className}`}>
         <ThemeProvider attribute="class" defaultTheme="light">
-          <LayoutProvider>
-            {children}
-            <Toaster />
-          </LayoutProvider>
+          {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
